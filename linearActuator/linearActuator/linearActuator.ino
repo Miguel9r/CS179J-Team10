@@ -22,13 +22,13 @@ void serialEvent(){
     switch (temp){
       case 0x01:
         actuator.writeMicroseconds(2000); //2000 ms retracts arm
-        delay(1000);
+        //delay(200);
         actuator.writeMicroseconds(0);
         Serial.println("expand received");
 
       case 0x02:
         actuator.writeMicroseconds(1000); //1000 ms extends arm
-        delay(1000);
+        //delay(200);
         actuator.writeMicroseconds(0);
         Serial.println("retract received");
 

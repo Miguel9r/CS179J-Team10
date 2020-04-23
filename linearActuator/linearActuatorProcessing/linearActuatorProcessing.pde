@@ -16,7 +16,7 @@ void draw(){
   text(s,30,30);
 }
 
-void keyReleased(){
+void keyPressed(){
   switch(key) {
  
     case 'a':
@@ -27,6 +27,25 @@ void keyReleased(){
     case 's':
       mySerial.write(0x02);
       println("sending extend signal");
+      break;
+    
+    default:
+      println("Unknown Command: "+key);
+      break;
+  }
+}
+
+void keyReleased(){
+  switch(key) {
+ 
+    case 'a':
+      mySerial.write(0x00);
+      println("Finish retract signal");
+      break;
+    
+    case 's':
+      mySerial.write(0x00);
+      println("Finish extend signal");
       break;
     
     default:
