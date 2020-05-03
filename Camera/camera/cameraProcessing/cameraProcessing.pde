@@ -1,85 +1,233 @@
-import processing.serial.*;
-
-Serial mySerial;
-
-PImage photo;
+import processing.serial.*;       // import the Processing serial library
+ 
+ 
+ 
+Serial myPort;                    // The serial port
+ 
+ 
+ 
+//NEW ADDITIONS
+ 
 byte rawBytes[];
  
-void setup(){
-  size(800,800);
-  mySerial = new Serial(this, "COM3", 250000); //change COM to appropriate COM
-  mySerial.bufferUntil('\n');
-  //output = createOutput("test.jpg");
-  photo = createImage(320, 240, RGB);
-  photo.loadPixels();
-  mySerial.write(0x10);
-}
-
-void draw(){
-  background(255,255,255);
-  image(photo, 0, 0);
-}
-
-void keyReleased(){
-  switch(key) {
+int sensorNum = 0;
  
-    case 's':
-      mySerial.write(0x10);
-      println("Starting Capture");
-      break;
-    
-    case 'c':
-      mySerial.write(7);
-      break;
-    
-    default:
-      println("Unknown Command: "+key);
-      break;
-  }
-  
-}
+PImage img;  
+ 
+long picNum = 0;
 
-void serialEvent(Serial mySerial) {
-  while (mySerial.available() > 0) {
+boolean isCapture = false;
+boolean isStream = true;
+
+
+ 
+ 
+void setup() {
+ 
+  size(640, 480);
+ 
+ 
+ 
+  // List all the available serial ports
+ 
+  // if using Processing 2.1 or later, use Serial.printArray()
+ 
+  printArray(Serial.list());
+ 
+ 
+ 
+ 
+ 
+  // Change the 0 to the appropriate number of the serial port
+ 
+  // that your microcontroller is attached to.
+ 
+  myPort = new Serial(this, Serial.list()[0], 250000);
+ 
+ 
+ 
+  // read bytes into a buffer until you get a linefeed (ASCII 10):
+ 
+  myPort.bufferUntil('\n');
+ 
+ 
+ 
+  // draw with smooth edges:
+ 
+  smooth();
+ 
+ 
+ 
+  img = createImage(320, 240, RGB);
+ 
+  img.loadPixels();
+ 
+  //frameRate(600);
+ 
+  myPort.write(0x10);
+}
+ 
+ 
+ 
+ 
+ 
+void draw() {
+ 
+  
+ 
+  background(255);
+ 
+  image(img, 0, 0, width, height-100);
+ 
+  fill(0);
+  delay(100);
+  
+  if (isStream == true)
+  {
+    
+  myPort.write(0x10); //livestreams
+  isStream = false;
+  
+  }
+
+  
+  text("Help:", 20, height-80);
+
+ 
+  text("- Press key S to capture a still photo", 30, height-40);
+ 
+  text("- Press key C to enable/disable StopMotion capture", 30, height-20);
+}
+ 
+ 
+ 
+ 
+ 
+// serialEvent  method is run automatically by the Processing applet
+ 
+// whenever the buffer reaches the  byte value set in the bufferUntil()
+ 
+// method in the setup():
+ 
+ 
+ 
+void serialEvent(Serial myPort) {
+ 
+  while (myPort.available() > 0) {
+ 
+ 
+ 
     String incoming[];
-    String myString = mySerial.readStringUntil('\n');
+ 
+    String myString = myPort.readStringUntil('\n');
+ 
+ 
+ 
     myString = trim(myString);
+ 
     incoming = split(myString, ',');
+ 
+ 
+ 
     if (incoming.length > 1) {
+ 
       if (incoming[0].equals("FifoLength:")) {
+ 
         //initialize raw data byte array to the size of the picture
+ 
         rawBytes = new byte[int(incoming[1])];
-      } 
-      else if (incoming[0].equals("Image:")) {
+ 
+        println("Picture Size: "+incoming[1]+" bytes");
+      } else if (incoming[0].equals("Image:")) {
+ 
         int x = 0;
+ 
         for (int i = 1; i < incoming.length; i++) {
+ 
           try {
+ 
             //add raw jpeg incoming bytes to byte array
+ 
             rawBytes[x]= (byte)int(incoming[i]);
+ 
             x++;
+
           }
+ 
           catch(RuntimeException e) {
+ 
             println(e.getMessage());
           }
         }
+ 
         try {
+ 
           //Save raw data to file
-          String fname = "testPic.jpg";
-          saveBytes(fname, rawBytes);
+ 
+          String fname = "temp"+".jpg";
+ 
+          saveBytes("data/capture/"+fname, rawBytes);
+ 
+ 
+ 
           // Open saved picture for local display
-          photo = loadImage(fname);
+ 
+          img = loadImage("/data/capture/"+fname);
+ 
+          picNum++;
+          if(isCapture == false)
+            {
+              isStream = true;
+            }
+          
         }
+ 
         catch(RuntimeException e) {
+ 
           println(e.getMessage());
         }
-      }
-      else if (incoming[0].equals("Ready:")) {
-        mySerial.write(0x10);
+      } else if (incoming[0].equals("Ready:")) {
+ 
+        myPort.write(0x10);
+ 
         println("Starting Capture");
       }
-    } 
-    else {
+    } else {
+ 
       println(myString);
     }
+  }
+}
+ 
+ 
+ 
+void keyPressed() {
+ 
+  switch(key) {
+ 
+  case 's':
+ 
+    myPort.write(0x10);
+ 
+    println("Starting Capture");
+ 
+    break;
+ 
+ 
+ 
+  case 'c':
+    
+    if(isCapture == true){
+      myPort.write(0x10);
+    }
+    isCapture = !isCapture;
+ 
+    break;
+ 
+  default:
+ 
+    println("Unknown Command: "+key);
+ 
+    break;
   }
 }
