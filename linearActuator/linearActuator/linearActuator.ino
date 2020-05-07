@@ -1,3 +1,4 @@
+//Collaborated Code with Kathleen & Bailey
 #include <Servo.h>
 
 Servo actuator;
