@@ -1,5 +1,5 @@
+//Bailey and Kathleen Collaborated Code 
 #include <Wire.h>
- 
 #include <ArduCAM.h>
  
 #include <SPI.h>
