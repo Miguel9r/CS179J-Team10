@@ -23,6 +23,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.DreamTeam.SmartTripod",
+      "versionCode": 1
     }
   }
 }
