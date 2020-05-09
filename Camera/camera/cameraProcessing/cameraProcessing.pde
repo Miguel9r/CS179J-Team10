@@ -1,5 +1,5 @@
 import processing.serial.*;       // import the Processing serial library
- 
+import java.util.Random; 
  
  
 Serial myPort;                    // The serial port
@@ -9,7 +9,7 @@ Serial myPort;                    // The serial port
 //NEW ADDITIONS
  
 byte rawBytes[];
- 
+Random rand = new Random();
 int sensorNum = 0;
  
 PImage img;  
@@ -89,14 +89,8 @@ void draw() {
   isStream = false;
   
   }
-
-  
-  text("Help:", 20, height-80);
-
  
-  text("- Press key S to capture a still photo", 30, height-40);
- 
-  text("- Press key C to enable/disable StopMotion capture", 30, height-20);
+  text("- Press key C to capture", 30, height-20);
 }
  
  
@@ -172,7 +166,7 @@ void serialEvent(Serial myPort) {
  
           // Open saved picture for local display
  
-          img = loadImage("/data/capture/"+fname);
+          img = loadImage("data/capture/"+fname);
  
           picNum++;
           if(isCapture == false)
@@ -217,11 +211,24 @@ void keyPressed() {
  
   case 'c':
     
+    isCapture = true;
+ 
+    break;
+
+  case 'y':
+    if(isCapture == true){
+      String name = Integer.toString(rand.nextInt(Integer.MAX_VALUE)) + ".jpg";
+      saveBytes("data/capture/"+name, rawBytes);
+      myPort.write(0x10);
+      isCapture = false;
+    }
+    break;
+  
+  case 'n':
     if(isCapture == true){
       myPort.write(0x10);
+      isCapture = false;
     }
-    isCapture = !isCapture;
- 
     break;
  
   default:
