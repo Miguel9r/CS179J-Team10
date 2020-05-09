@@ -1,5 +1,6 @@
 import processing.serial.*;       // import the Processing serial library
 import java.util.Random; 
+import java.util.concurrent.TimeUnit; // Numbering Photos
  
  
 Serial myPort;                    // The serial port
@@ -9,7 +10,7 @@ Serial myPort;                    // The serial port
 //NEW ADDITIONS
  
 byte rawBytes[];
-Random rand = new Random();
+
 int sensorNum = 0;
  
 PImage img;  
@@ -84,13 +85,21 @@ void draw() {
   
   if (isStream == true)
   {
-    
   myPort.write(0x10); //livestreams
   isStream = false;
   
   }
  
-  text("- Press key C to capture", 30, height-20);
+
+  if(isCapture == true)
+  {
+         text("- Press Y to save capture or N to continue camera stream ", 30, height-20);
+  }
+  else
+  {
+    text("- Press key C to capture", 30, height-20);
+  }
+  
 }
  
  
@@ -160,13 +169,13 @@ void serialEvent(Serial myPort) {
  
           String fname = "temp"+".jpg";
  
-          saveBytes("data/capture/"+fname, rawBytes);
+          saveBytes("data/"+fname, rawBytes);
  
  
  
           // Open saved picture for local display
  
-          img = loadImage("data/capture/"+fname);
+          img = loadImage("data/"+fname);
  
           picNum++;
           if(isCapture == false)
@@ -212,12 +221,14 @@ void keyPressed() {
   case 'c':
     
     isCapture = true;
+
  
     break;
 
   case 'y':
     if(isCapture == true){
-      String name = Integer.toString(rand.nextInt(Integer.MAX_VALUE)) + ".jpg";
+      long time = System.currentTimeMillis();
+      String name = Long.toString(time) + ".jpg";
       saveBytes("data/capture/"+name, rawBytes);
       myPort.write(0x10);
       isCapture = false;
