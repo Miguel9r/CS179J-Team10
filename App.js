@@ -4,6 +4,8 @@ import { Icon, Button, ButtonGroup, ThemeProvider, Header } from "react-native-e
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { BleManager } from 'react-native-ble-plx';
+
 
 function CameraScreen() {
   var flashStatus = false;
@@ -12,6 +14,7 @@ function CameraScreen() {
     console.log('This will open up the menu.');
     alert('This will open up the menu.');
   }
+
 
   function bluetoothConnection() {
     console.log('This will check for the bluetooth connection.');

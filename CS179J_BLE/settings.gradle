@@ -1,0 +1,2 @@
+rootProject.name='CS179J_BLE'
+include ':app'
