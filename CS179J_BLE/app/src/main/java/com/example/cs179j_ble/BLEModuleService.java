@@ -48,7 +48,7 @@
      private static BluetoothGattDescriptor mCapSenseCccd;
 
      // UUIDs for the service and characteristics that the custom CapSenseLED service uses
-     private final static String baseUUID = "00000000-0000-1000-8000-00805f9b34f";
+     private final static String baseUUID = "00001101-0000-1000-8000-00805F9B34FB";
      private final static String capsenseLedServiceUUID = baseUUID + "0";
      public final static String ledCharacteristicUUID = baseUUID + "1";
      public final static String capsenseCharacteristicUUID = baseUUID + "2";
