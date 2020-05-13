@@ -35,6 +35,8 @@
  public class BLEModuleService extends Service {
      private final static String TAG = BLEModuleService.class.getSimpleName();
 
+     ArrayList<ScanResult> scanResults;
+
      // Bluetooth objects that we need to interact with
      private static BluetoothManager mBluetoothManager;
      private static BluetoothAdapter mBluetoothAdapter;
@@ -46,6 +48,9 @@
      private static BluetoothGattCharacteristic mLedCharacterisitc;
      private static BluetoothGattCharacteristic mCapsenseCharacteristic;
      private static BluetoothGattDescriptor mCapSenseCccd;
+
+     //List of Devices
+     public String listOfDevices = "";
 
      // UUIDs for the service and characteristics that the custom CapSenseLED service uses
      private final static String baseUUID = "00001101-0000-1000-8000-00805F9B34FB";
@@ -145,7 +150,7 @@
              ParcelUuid PUuid = new ParcelUuid(capsenseLedService);
              ScanFilter filter = new ScanFilter.Builder().setServiceUuid(PUuid).build();
              filters.add(filter);
-             mLEScanner.startScan(filters, settings, mScanCallback);
+              mLEScanner.startScan(filters, settings, mScanCallback);
          }
      }
 
@@ -299,12 +304,25 @@
              };
 
      /**
-      * Implements the callback for when scanning for devices has faound a device with
+      * Implements the callback for when scanning for devices has found a device with
       * the service we are looking for.
       * <p>
       * This is the callback for BLE scanning for LOLLIPOP and later
       */
+
+
+
      private final ScanCallback mScanCallback = new ScanCallback() {
+         @Override
+         public void onBatchScanResults(List<ScanResult> results)
+         {
+             super.onBatchScanResults(results);
+
+             for (ScanResult result: results)
+             {
+                 Log.d("Device: ", results.toString());
+             }
+         }
          @Override
          public void onScanResult(int callbackType, ScanResult result) {
              mLeDevice = result.getDevice();

@@ -10,4 +10,10 @@
     <string name="NotifyOff">NotifyOff</string>
     <string name="Notify">Notify</string>
     <string name="NoTouch" />
+    <string name="upButton_string">upButton_string</string>
+    <string name="camera_area">Camera Area</string>
+    <string name="leftButton_string">leftButton_string</string>
+    <string name="centerButton_string">centerButton_string</string>
+    <string name="rightButton_string" />
+    <string name="downButton_string">downButton_string</string>
 </resources>

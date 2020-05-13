@@ -6,10 +6,12 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 
@@ -31,6 +33,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private static Button disconnect_button;
     private static Switch led_switch;
     private static Switch cap_switch;
+    private static Camera camera;
+    ImageButton upButton = (ImageButton)findViewById(R.id.upButton);
 
     // Variables to manage BLE connection
     private static boolean mConnectState;
@@ -124,6 +130,15 @@ public class MainActivity extends AppCompatActivity {
         led_switch = (Switch) findViewById(R.id.led_switch);
         cap_switch = (Switch) findViewById(R.id.capsense_switch);
 
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Creation", "Up button is pressed");
+            }
+        });
+
+
         // Initialize service and connection state variable
         mServiceConnected = false;
         mConnectState = false;
@@ -166,7 +181,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
+
 
     //This method required for Android 6.0 (Marshmallow)
     @Override
