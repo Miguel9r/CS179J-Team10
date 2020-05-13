@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private static Switch led_switch;
     private static Switch cap_switch;
     private static Camera camera;
-    ImageButton upButton = (ImageButton)findViewById(R.id.upButton);
 
     // Variables to manage BLE connection
     private static boolean mConnectState;
@@ -119,24 +118,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Set up a variable to point to the CapSense value on the display
-        mCapsenseValue = (TextView) findViewById(R.id.capsense_value);
+        mCapsenseValue = findViewById(R.id.capsense_value);
 
         // Set up variables for accessing buttons and slide switches
-        start_button = (Button) findViewById(R.id.start_button);
-        search_button = (Button) findViewById(R.id.search_button);
-        connect_button = (Button) findViewById(R.id.connect_button);
-        discover_button = (Button) findViewById(R.id.discoverSvc_button);
-        disconnect_button = (Button) findViewById(R.id.disconnect_button);
-        led_switch = (Switch) findViewById(R.id.led_switch);
-        cap_switch = (Switch) findViewById(R.id.capsense_switch);
-
-
-        upButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Creation", "Up button is pressed");
-            }
-        });
+        start_button = findViewById(R.id.start_button);
+        search_button = findViewById(R.id.search_button);
+        connect_button = findViewById(R.id.connect_button);
+        discover_button = findViewById(R.id.discoverSvc_button);
+        disconnect_button = findViewById(R.id.disconnect_button);
+        led_switch = findViewById(R.id.led_switch);
+        cap_switch = findViewById(R.id.capsense_switch);
 
 
         // Initialize service and connection state variable
@@ -187,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
     //This method required for Android 6.0 (Marshmallow)
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -213,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         // Register the broadcast receiver. This specified the messages the main activity looks for from the BLEModuleService
         final IntentFilter filter = new IntentFilter();
-        filter.addAction(BLEModuleService.ACTION_BLESCAN_CALLBACK);
-        filter.addAction(BLEModuleService.ACTION_CONNECTED);
-        filter.addAction(BLEModuleService.ACTION_DISCONNECTED);
-        filter.addAction(BLEModuleService.ACTION_SERVICES_DISCOVERED);
-        filter.addAction(BLEModuleService.ACTION_DATA_RECEIVED);
+        filter.addAction(com.example.cs179j_ble.BLEModuleService.ACTION_BLESCAN_CALLBACK);
+        filter.addAction(com.example.cs179j_ble.BLEModuleService.ACTION_CONNECTED);
+        filter.addAction(com.example.cs179j_ble.BLEModuleService.ACTION_DISCONNECTED);
+        filter.addAction(com.example.cs179j_ble.BLEModuleService.ACTION_SERVICES_DISCOVERED);
+        filter.addAction(com.example.cs179j_ble.BLEModuleService.ACTION_DATA_RECEIVED);
         registerReceiver(mBleUpdateReceiver, filter);
     }
 
