@@ -47,7 +47,7 @@
 
         <Button
             android:id="@+id/discoverSvc_button"
-            android:layout_width="113dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:onClick="discoverServices"
