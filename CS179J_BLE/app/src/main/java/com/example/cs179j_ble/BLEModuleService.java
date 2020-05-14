@@ -313,16 +313,7 @@
 
 
      private final ScanCallback mScanCallback = new ScanCallback() {
-         @Override
-         public void onBatchScanResults(List<ScanResult> results)
-         {
-             super.onBatchScanResults(results);
 
-             for (ScanResult result: results)
-             {
-                 Log.d("Device: ", results.toString());
-             }
-         }
          @Override
          public void onScanResult(int callbackType, ScanResult result) {
              mLeDevice = result.getDevice();
