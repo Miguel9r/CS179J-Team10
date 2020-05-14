@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -9,50 +9,69 @@
     android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/start_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="true"
-        android:onClick="startBluetooth"
-        android:text="@string/Start"
-        android:textAllCaps="false" />
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:onClick="searchBluetooth"
-        android:text="@string/Search"
-        android:textAllCaps="false" />
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="149dp"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:onClick="startBluetooth"
+            android:text="@string/TurnOnBLE"
+            android:textAllCaps="false"
+            app:layout_row="0" />
 
-    <Button
-        android:id="@+id/connect_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:onClick="connectBluetooth"
-        android:text="@string/Connect"
-        android:textAllCaps="false" />
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="searchBluetooth"
+            android:text="@string/Search"
+            android:textAllCaps="false"
+            app:layout_column="1"
+            app:layout_row="0" />
 
-    <Button
-        android:id="@+id/discoverSvc_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:onClick="discoverServices"
-        android:text="@string/DiscoverServices"
-        android:textAllCaps="false" />
+        <Button
+            android:id="@+id/connect_button"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="connectBluetooth"
+            android:text="@string/Connect"
+            android:textAllCaps="false"
+            app:layout_column="2"
+            app:layout_row="0" />
 
-    <Button
-        android:id="@+id/disconnect_button"
+        <Button
+            android:id="@+id/discoverSvc_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="discoverServices"
+            android:text="@string/DiscoverServices"
+            android:textAllCaps="false"
+            app:layout_column="0"
+            app:layout_row="1" />
+
+        <Button
+            android:id="@+id/disconnect_button"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="Disconnect"
+            android:text="@string/Disconnect"
+            android:textAllCaps="false" />
+    </androidx.gridlayout.widget.GridLayout>
+
+
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:onClick="Disconnect"
-        android:text="@string/Disconnect"
-        android:textAllCaps="false" />
+        >
+
 
     <Switch
         android:id="@+id/led_switch"
@@ -64,10 +83,6 @@
         android:switchPadding="12dp"
         android:text="@string/RedLED"
         android:visibility="invisible" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/capsense_header"
@@ -100,12 +115,12 @@
             android:text="@string/Notify"
             android:visibility="invisible" />
 
-    </RelativeLayout>
+    </TableRow>
 
     <TableRow
         android:id="@+id/cameraArea"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="230dp"
         android:background="#08E6D2">
 
         <TextView
@@ -116,12 +131,16 @@
             tools:textSize="30sp" />
     </TableRow>
 
+<!--    <SurfaceView-->
+<!--        android:id="@+id/surfaceView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal|center_vertical"
-        android:visibility="invisible"
-        tools:visibility="visible">
+        android:paddingTop="10dp">
 
         <ImageButton
             android:id="@+id/upButton"
@@ -130,8 +149,9 @@
             android:layout_row="0"
             android:layout_column="1"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/ic_arrow_drop_up_24px"
-            android:contentDescription="@string/upButton_string" />
+            android:contentDescription="@string/upButton_string"
+            android:onClick="upButton_activity"
+            app:srcCompat="@drawable/ic_arrow_drop_up_24px" />
 
         <ImageButton
             android:id="@+id/leftButton"
@@ -140,6 +160,7 @@
             android:layout_row="1"
             android:layout_column="0"
             android:layout_gravity="start"
+            android:onClick="leftButton_activity"
             android:contentDescription="@string/leftButton_string"
             app:srcCompat="@drawable/ic_arrow_left_24px" />
 
@@ -151,6 +172,7 @@
             android:layout_column="1"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/centerButton_string"
+            android:onClick="centerButton_activity"
             app:srcCompat="@drawable/ic_control_camera_24px" />
 
         <ImageButton
@@ -161,6 +183,7 @@
             android:layout_column="2"
             android:layout_gravity="end"
             android:contentDescription="@string/rightButton_string"
+            android:onClick="rightButton_activity"
             app:srcCompat="@drawable/ic_arrow_right_24px" />
 
         <ImageButton
@@ -169,9 +192,10 @@
             android:layout_height="80dp"
             android:layout_row="2"
             android:layout_column="1"
+            android:onClick="downButton_activity"
             android:contentDescription="@string/downButton_string"
             app:srcCompat="@drawable/ic_arrow_drop_down_24px" />
     </GridLayout>
 
-</GridLayout>
+</LinearLayout>
 

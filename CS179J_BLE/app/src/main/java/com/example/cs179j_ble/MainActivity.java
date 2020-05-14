@@ -7,10 +7,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.hardware.Camera;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -43,6 +45,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private static Switch led_switch;
     private static Switch cap_switch;
     private static Camera camera;
+    private static ImageButton upButton;
 
     // Variables to manage BLE connection
     private static boolean mConnectState;
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // Set up a variable to point to the CapSense value on the display
         mCapsenseValue = findViewById(R.id.capsense_value);
 
@@ -128,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
         disconnect_button = findViewById(R.id.disconnect_button);
         led_switch = findViewById(R.id.led_switch);
         cap_switch = findViewById(R.id.capsense_switch);
+        upButton = findViewById(R.id.upButton);
+
 
 
         // Initialize service and connection state variable
@@ -319,6 +326,59 @@ public class MainActivity extends AppCompatActivity {
         /* That event broadcasts a message which is picked up by the mGattUpdateReceiver */
     }
 
+
+    public void upButton_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Up button pressed!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,text, duration);
+        toast.show();
+    }
+
+    public void leftButton_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Left button pressed!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,text, duration);
+        toast.show();
+    }
+
+    public void centerButton_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Center button pressed!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,text, duration);
+        toast.show();
+    }
+
+    public void rightButton_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Right button pressed!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,text, duration);
+        toast.show();
+    }
+
+    public void downButton_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Down button pressed!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,text, duration);
+        toast.show();
+    }
+
+
+
     /**
      * Listener for BLE event broadcasts
      */
@@ -390,6 +450,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+
+
 }
+
+
 
 

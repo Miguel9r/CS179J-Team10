@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CS179J_BLE</string>
-    <string name="Start">Start Bluetooth</string>
+    <string name="TurnOnBLE">Turn On BLE</string>
     <string name="Search">Search</string>
     <string name="Connect">Connect</string>
     <string name="DiscoverServices">Discover Services</string>
