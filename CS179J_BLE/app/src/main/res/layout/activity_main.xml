@@ -89,8 +89,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
-            android:paddingTop="6dp"
-            android:paddingEnd="12dp"
+            android:paddingTop="1dp"
+            android:paddingEnd="6dp"
             android:text="@string/Capsense"
             android:visibility="invisible" />
 
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/capsense_header"
-            android:paddingTop="6dp"
+            android:paddingTop="1dp"
             android:text="@string/NotifyOff"
             android:visibility="invisible" />
 
@@ -140,7 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal|center_vertical"
-        android:paddingTop="10dp">
+        android:paddingTop="5dp">
 
         <ImageButton
             android:id="@+id/upButton"
