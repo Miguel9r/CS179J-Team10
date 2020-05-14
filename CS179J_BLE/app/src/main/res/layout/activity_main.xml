@@ -15,7 +15,7 @@
 
         <Button
             android:id="@+id/start_button"
-            android:layout_width="149dp"
+            android:layout_width="118dp"
             android:layout_height="wrap_content"
             android:enabled="true"
             android:onClick="startBluetooth"
@@ -47,7 +47,7 @@
 
         <Button
             android:id="@+id/discoverSvc_button"
-            android:layout_width="150dp"
+            android:layout_width="113dp"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:onClick="discoverServices"
@@ -58,7 +58,7 @@
 
         <Button
             android:id="@+id/disconnect_button"
-            android:layout_width="111dp"
+            android:layout_width="114dp"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:onClick="Disconnect"
