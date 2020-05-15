@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -64,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
     private static Switch cap_switch;
     private static Camera camera;
     private static ImageButton upButton;
+    private static ImageButton leftButton;
+    private static ImageButton rightButton;
+    private static ImageButton centerButton;
+    private static ImageButton downButton;
+    private static ImageButton linearActButton;
+    private static ImageButton panTiltButton;
+    private static ImageButton cameraButton;
+    private static ImageButton flashButton;
+
 
     // Variables to manage BLE connection
     private static boolean mConnectState;
@@ -134,6 +144,15 @@ public class MainActivity extends AppCompatActivity {
         led_switch = findViewById(R.id.led_switch);
         cap_switch = findViewById(R.id.capsense_switch);
         upButton = findViewById(R.id.upButton);
+        leftButton = findViewById(R.id.leftButton);
+        rightButton = findViewById(R.id.rightButton);
+        downButton = findViewById(R.id.downButton);
+        centerButton = findViewById(R.id.centerButton);
+        linearActButton = findViewById(R.id.lineaerActButton);
+        panTiltButton = findViewById(R.id.panTiltButton);
+        cameraButton = findViewById(R.id.cameraButton);
+        flashButton = findViewById(R.id.flashButton);
+
 
 
 
@@ -326,13 +345,19 @@ public class MainActivity extends AppCompatActivity {
         /* That event broadcasts a message which is picked up by the mGattUpdateReceiver */
     }
 
+    /**
+    * This section is for button activity
+    * Each button gets an activity
+    * */
 
     public void upButton_activity(View view)
     {
+        // Create context for application context for toast to know where it's being displayed
         Context context = getApplicationContext();
         CharSequence text = "Up button pressed!";
         int duration = Toast.LENGTH_SHORT;
 
+        // toast is the notification system that allows us to display text
         Toast toast = Toast.makeText(context,text, duration);
         toast.show();
     }
@@ -355,7 +380,46 @@ public class MainActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context,text, duration);
         toast.show();
+
+        view.setVisibility(View.INVISIBLE);
+
+        leftButton.setVisibility(View.INVISIBLE);
+        rightButton.setVisibility(View.INVISIBLE);
+        linearActButton.setVisibility(View.VISIBLE);
+
+
+
     }
+
+    public void linearActButton_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Linear Actuator button pressed!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,text, duration);
+        toast.show();
+
+        view.setVisibility(View.INVISIBLE);
+        panTiltButton.setVisibility(View.VISIBLE);
+        leftButton.setVisibility(View.VISIBLE);
+        rightButton.setVisibility(View.VISIBLE);
+    }
+
+
+    public void panTiltButton_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Pan Tilt button pressed!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,text, duration);
+        toast.show();
+
+        view.setVisibility(View.INVISIBLE);
+        centerButton.setVisibility(View.VISIBLE);
+    }
+
 
     public void rightButton_activity(View view)
     {
@@ -376,6 +440,20 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context,text, duration);
         toast.show();
     }
+
+    public void flashButton_activity(View view)
+    {
+
+    }
+
+    public void cameraButton_activity(View view)
+    {
+
+    }
+
+    /**
+    * End of button activity section
+    * */
 
 
 

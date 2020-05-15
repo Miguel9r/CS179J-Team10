@@ -16,4 +16,6 @@
     <string name="centerButton_string">centerButton_string</string>
     <string name="rightButton_string" />
     <string name="downButton_string">downButton_string</string>
+    <string name="lineaerActButton_string">linearActButton</string>
+    <string name="panTiltButton_string">panTiltButton</string>
 </resources>
