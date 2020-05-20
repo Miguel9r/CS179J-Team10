@@ -439,7 +439,7 @@
 //             if (uuid.equalsIgnoreCase(capsenseCharacteristicUUID)) {
              if (uuid.equalsIgnoreCase(LEDCharacteristicUUID)) {
 //                 mCapSenseValue = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, 0).toString();
-                 ledValue = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, 0).toString();
+                 ledValue = characteristic.getValue().toString();
 
              }
 

@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private static ImageButton panTiltButton;
     private static ImageButton cameraButton;
     private static ImageButton flashButton;
+    private static AlertDialog.Builder builder;
+    
 
 
     // Variables to manage BLE connection
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set up a variable to point to the CapSense value on the display
-        mCapsenseValue = findViewById(R.id.capsense_value);
+//        mCapsenseValue = findViewById(R.id.capsense_value);
 
         // Set up variables for accessing buttons and slide switches
         start_button = findViewById(R.id.start_button);
@@ -141,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         connect_button = findViewById(R.id.connect_button);
         discover_button = findViewById(R.id.discoverSvc_button);
         disconnect_button = findViewById(R.id.disconnect_button);
-        led_switch = findViewById(R.id.led_switch);
-        cap_switch = findViewById(R.id.capsense_switch);
+//        led_switch = findViewById(R.id.led_switch);
+//        cap_switch = findViewById(R.id.capsense_switch);
         upButton = findViewById(R.id.upButton);
         leftButton = findViewById(R.id.leftButton);
         rightButton = findViewById(R.id.rightButton);
@@ -152,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         panTiltButton = findViewById(R.id.panTiltButton);
         cameraButton = findViewById(R.id.cameraButton);
         flashButton = findViewById(R.id.flashButton);
+        flashButton.setEnabled(false);
 
 
 
@@ -178,26 +181,26 @@ public class MainActivity extends AppCompatActivity {
         } //End of section for Android 6.0 (Marshmallow)
 
         /* This will be called when the LED On/Off switch is touched */
-        led_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Turn the LED on or OFF based on the state of the switch
-                BLEModuleService.writeLedCharacteristic(isChecked);
-            }
-        });
+//        led_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                // Turn the LED on or OFF based on the state of the switch
+//                BLEModuleService.writeLedCharacteristic(isChecked);
+//            }
+//        });
 
         /* This will be called when the CapSense Notify On/Off switch is touched */
-        cap_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Turn CapSense Notifications on/off based on the state of the switch
-                BLEModuleService.writeCapSenseNotification(isChecked);
-                CapSenseNotifyState = isChecked;  // Keep track of CapSense notification state
-                if(isChecked) { // Notifications are now on so text has to say "No Touch"
-                    mCapsenseValue.setText(R.string.NoTouch);
-                } else { // Notifications are now off so text has to say "Notify Off"
-                    mCapsenseValue.setText(R.string.NotifyOff);
-                }
-            }
-        });
+//        cap_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                // Turn CapSense Notifications on/off based on the state of the switch
+//                BLEModuleService.writeCapSenseNotification(isChecked);
+//                CapSenseNotifyState = isChecked;  // Keep track of CapSense notification state
+//                if(isChecked) { // Notifications are now on so text has to say "No Touch"
+//                    mCapsenseValue.setText(R.string.NoTouch);
+//                } else { // Notifications are now off so text has to say "Notify Off"
+//                    mCapsenseValue.setText(R.string.NotifyOff);
+//                }
+//            }
+//        });
 
     }
 
@@ -448,6 +451,29 @@ public class MainActivity extends AppCompatActivity {
 
     public void cameraButton_activity(View view)
     {
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to save this photo?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                Toast.makeText(getApplicationContext(),"You saved this photo!", Toast.LENGTH_SHORT).show();
+                
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                Toast.makeText(getApplicationContext(), "Photo not saved!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        AlertDialog alert = builder.create();
+        alert.setTitle("Photo Captured!");
+        alert.show();
 
     }
 
@@ -489,10 +515,10 @@ public class MainActivity extends AppCompatActivity {
                     discover_button.setEnabled(false);
                     search_button.setEnabled(true);
                     // Turn off and disable the LED and CapSense switches
-                    led_switch.setChecked(false);
-                    led_switch.setEnabled(false);
-                    cap_switch.setChecked(false);
-                    cap_switch.setEnabled(false);
+//                    led_switch.setChecked(false);
+//                    led_switch.setEnabled(false);
+//                    cap_switch.setChecked(false);
+//                    cap_switch.setEnabled(false);
                     mConnectState = false;
                     Log.d(TAG, "Disconnected");
                     break;
@@ -500,29 +526,29 @@ public class MainActivity extends AppCompatActivity {
                     // Disable the discover services button
                     discover_button.setEnabled(false);
                     // Enable the LED and CapSense switches
-                    led_switch.setEnabled(true);
-                    cap_switch.setEnabled(true);
+//                    led_switch.setEnabled(true);
+//                    cap_switch.setEnabled(true);
                     Log.d(TAG, "Services Discovered");
                     break;
                 case com.example.cs179j_ble.BLEModuleService.ACTION_DATA_RECEIVED:
                     // This is called after a notify or a read completes
                     // Check LED switch Setting
-                    if(BLEModuleService.getLedSwitchState()){
-                        led_switch.setChecked(true);
-                    } else {
-                        led_switch.setChecked(false);
-                    }
+//                    if(BLEModuleService.getLedSwitchState()){
+//                        led_switch.setChecked(true);
+//                    } else {
+//                        led_switch.setChecked(false);
+                   // }
                     // Get CapSense Slider Value
-                    String CapSensePos = BLEModuleService.getCapSenseValue();
-                    if (CapSensePos.equals("-1")) {  // No Touch returns 0xFFFF which is -1
-                        if(!CapSenseNotifyState) { // Notifications are off
-                            mCapsenseValue.setText(R.string.NotifyOff);
-                        } else { // Notifications are on but there is no finger on the slider
-                            mCapsenseValue.setText(R.string.NoTouch);
-                        }
-                    } else { // Valid CapSense value is returned
-                        mCapsenseValue.setText(CapSensePos);
-                    }
+//                    String CapSensePos = BLEModuleService.getCapSenseValue();
+//                    if (CapSensePos.equals("-1")) {  // No Touch returns 0xFFFF which is -1
+//                        if(!CapSenseNotifyState) { // Notifications are off
+//                            mCapsenseValue.setText(R.string.NotifyOff);
+//                        } else { // Notifications are on but there is no finger on the slider
+//                            mCapsenseValue.setText(R.string.NoTouch);
+//                        }
+//                    } else { // Valid CapSense value is returned
+//                        mCapsenseValue.setText(CapSensePos);
+//                    }
                 default:
                     break;
             }

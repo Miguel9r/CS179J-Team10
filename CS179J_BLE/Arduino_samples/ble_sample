@@ -1,65 +1,97 @@
-#include <CurieBLE.h>
+#include <ArduinoBLE.h>
 
 const int ledPin = 13; // set ledPin to on-board LED
 const int buttonPin = 4; // set buttonPin to digital pin 4
 
-BLEPeripheral blePeripheral; // create peripheral instance
+
 BLEService ledService("19B10010-E8F2-537E-4F6C-D104768A1214"); // create service
-BLEDescriptor ledDescriptor("0d75a792-ddba-4361-a523-53426d1aa46e", "led");
+
+BLEDescriptor ledDescriptor("0d75a792-ddba-4361-a523-53426d1aa46e", "0001"); // descriptor for led service
+
 
 // create switch characteristic and allow remote device to read and write
 BLECharCharacteristic ledCharacteristic("19B10011-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
 // create button characteristic and allow remote device to get notifications
 BLECharCharacteristic buttonCharacteristic("19B10012-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify); // allows remote device to get notifications
 
+int buttonInput;
+
 void setup() {
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT); // use the LED on pin 13 as an output
   pinMode(buttonPin, INPUT); // use button pin 4 as an input
 
-  // set the local name peripheral advertises
-  blePeripheral.setLocalName("ButtonLED");
-  // set the UUID for the service this peripheral advertises:
-  blePeripheral.setAdvertisedServiceUuid(ledService.uuid());
+   if (!BLE.begin()) {
+      Serial.println("starting BLE failed!");
 
-  // add service and characteristics
-  blePeripheral.addAttribute(ledService);
-  blePeripheral.addAttribute(ledCharacteristic);
-  blePeripheral.addAttribute(buttonCharacteristic);
+      while (1);
+    }
 
-  ledCharacteristic.setValue(0);
-  buttonCharacteristic.setValue(0);
+   BLE.setLocalName("LED");
+   BLE.setAdvertisedService(ledService);
 
-  // advertise the service
-  blePeripheral.begin();
+     // add the characteristic to the service
+     ledService.addCharacteristic(ledCharacteristic);
+     ledService.addCharacteristic(buttonCharacteristic);
+
+     // add service
+    BLE.addService(ledService);
+
+    // set the initial value for the characteristic:
+      ledCharacteristic.writeValue(0);
+      buttonCharacteristic.writeValue(0);
+
+    BLE.advertise();
 
   Serial.println("Bluetooth device active, waiting for connections...");
 }
 
 void loop() {
-  // poll peripheral
-  blePeripheral.poll();
+ // listen for BLE peripherals to connect:
+   BLEDevice central = BLE.central();
 
-  // read the current button pin state
-  char buttonValue = digitalRead(buttonPin);
+   buttonInput = digitalRead(buttonPin);
 
-  // has the value changed since the last read
-  boolean buttonChanged = (buttonCharacteristic.value() != buttonValue);
+  // if a central is connected to peripheral:
+    if (central) {
+      Serial.print("Connected to central: ");
+      // print the central's MAC address:
+      Serial.println(central.address());
 
-  if (buttonChanged) {
-    // button state changed, update characteristics
-    ledCharacteristic.setValue(buttonValue);
-    buttonCharacteristic.setValue(buttonValue);
-  }
+      // while the central is still connected to peripheral:
+      while (central.connected()) {
+        // if the remote device wrote to the characteristic,
+        // use the value to control the LED:
+        if (ledCharacteristic.written()) {
+          if (ledCharacteristic.value()) {   // any value other than 0
+            Serial.println("LED on");
+            digitalWrite(ledPin, HIGH);         // will turn the LED on
+          } else {                              // a 0 value
+            Serial.println(F("LED off"));
+            digitalWrite(ledPin, LOW);          // will turn the LED off
+          }
+        }
+        else if(buttonInput == HIGH)
+        {
+            byte value = 0;
 
-  if (ledCharacteristic.written() || buttonChanged) {
-    // update LED, either central has written to characteristic or button state has changed
-    if (ledCharacteristic.value()) {
-      Serial.println("LED on");
-      digitalWrite(ledPin, HIGH);
-    } else {
-      Serial.println("LED off");
-      digitalWrite(ledPin, LOW);
-    }
-  }
+            ledCharacteristic.readValue(value);
+
+            if(value & 0x00)
+            {
+                digitalWrite(ledPin, HIGH);
+                ledCharacteristic.write((byte) 0x01);
+
+            }
+            else
+            {
+                   digitalWrite(ledPin, LOW);
+                   ledCharacteristic.write((byte) 0x00);
+            }
+
+        }
+        }
+      }
+
+
 }
