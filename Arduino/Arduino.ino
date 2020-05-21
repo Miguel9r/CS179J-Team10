@@ -7,10 +7,8 @@ int pwm = 1000;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  actuator.attach(pwmPin);
-  actuator.writeMicroseconds(1000);
-  delay(2000);
+  Serial.begin(250000); //921600
+  linearActuatorSetup();
 }
 
 void loop() {
@@ -18,9 +16,21 @@ void loop() {
 }
 
 void serialEvent(){
-  uint8_t temp = 0x00;
   if (Serial.available() > 0) {
+    uint8_t temp = 0xff;
     temp = Serial.read();
+    linearActuatorSerial(temp);
+  }
+}
+
+void linearActuatorSetup(){
+  actuator.attach(pwmPin);
+  actuator.writeMicroseconds(1000);
+  delay(2000);
+}
+
+void linearActuatorSerial(uint8_t temp){
+  if (Serial.available() > 0) {
     switch (temp){
       case 0x01:
         if(pwm > 1000){
@@ -41,10 +51,5 @@ void serialEvent(){
         break;
     }
     actuator.writeMicroseconds(pwm);
- //   delay(10);
-
   }
-//  while (Serial.available() > 0){
-//    temp = Serial.read();
-//  }
 }
