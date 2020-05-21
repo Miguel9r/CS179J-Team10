@@ -53,15 +53,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Set;
 
+
 public class MainActivity extends AppCompatActivity {
 
 
     // TAG is used for informational messages
     private final static String TAG = MainActivity.class.getSimpleName();
+    ConnectThread main_socket;
 
     // Variables to access objects from the layout such as buttons, switches, values
     private static Button start_button;
     private static Button search_button;
+    private static Button connectButton;
 
     private static Camera camera;
     private static ImageButton upButton;
@@ -76,10 +79,12 @@ public class MainActivity extends AppCompatActivity {
     private static AlertDialog.Builder builder;
     private static ListView listView;
     private static ArrayList<String> tasks = new ArrayList<>();
+    private static boolean deviceFound = false;
 
     private static ArrayAdapter<String> adapter;
 
     BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
+    BluetoothDevice smartTripod;
 
 
 
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         cameraButton = findViewById(R.id.cameraButton);
         flashButton = findViewById(R.id.flashButton);
         listView = findViewById(R.id.listView);
-
+        connectButton = findViewById(R.id.connect);
 
 
         flashButton.setEnabled(false);
@@ -184,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         else
             search_button.setEnabled(true);
-            start_button.setText("Connected!");
+            start_button.setText("Bluetooth On!");
             start_button.setEnabled(false);
 
     }
@@ -204,6 +209,13 @@ public class MainActivity extends AppCompatActivity {
             for (BluetoothDevice device : pairedDevices) {
                 deviceNameList.add(device.getName());
                 Log.d("Device: ", device.getName() + ": " + device.getAddress());
+
+                if(device.getName().equals("HC-06") && deviceFound)
+                {
+                    deviceFound = true;
+                   main_socket = new ConnectThread(device, BTAdapter);
+
+                }
             }
         }
 
@@ -219,6 +231,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void connect_activity(View view)
+    {
+        main_socket.run();
 
     }
 
