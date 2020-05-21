@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private static AlertDialog.Builder builder;
     private static ListView listView;
     private static ArrayList<String> tasks = new ArrayList<>();
+
     private static ArrayAdapter<String> adapter;
 
     BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         flashButton.setEnabled(false);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
         listView.setAdapter(adapter);
+
 
 
         //This section required for Android 6.0 (Marshmallow)
@@ -182,6 +184,9 @@ public class MainActivity extends AppCompatActivity {
                 }
         else
             search_button.setEnabled(true);
+            start_button.setText("Connected!");
+            start_button.setEnabled(false);
+
     }
 
     /**
@@ -198,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 deviceNameList.add(device.getName());
-                Log.d("Devices: ", device.getName());
+                Log.d("Device: ", device.getName() + ": " + device.getAddress());
             }
         }
 
