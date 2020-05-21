@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         flashButton.setEnabled(false);
+
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
         listView.setAdapter(adapter);
 
@@ -195,10 +196,11 @@ public class MainActivity extends AppCompatActivity {
      * @param view the view object
      */
     public void startBluetooth(View view) {
-        if (!BTAdapter.isEnabled()) {
+        if (!BTAdapter.isEnabled())
+        {
                     Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableBT, REQUEST_ENABLE_BLE);
-                }
+        }
         else
             search_button.setEnabled(true);
 
@@ -209,7 +211,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view the view object
      */
-    public void searchBluetooth(View view) {
+    public void searchBluetooth(View view)
+    {
 
 
         ArrayList<String>  deviceNameList = new ArrayList<String>();
@@ -263,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.i("[BLUETOOTH]", "Creating and running Thread");
+
     connectedThread = new ConnectedThread(mmSocket,mHandler);
     connectedThread.start();
 }

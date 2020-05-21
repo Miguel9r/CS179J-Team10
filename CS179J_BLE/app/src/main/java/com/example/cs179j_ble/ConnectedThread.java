@@ -24,6 +24,7 @@ public class ConnectedThread extends Thread
         this.uih = uih;
         Log.i("[THREAD-CT]","Creating thread");
         try{
+            Log.d("[THREAD-CT]", "Entered first try CT ");
             tmpIn = socket.getInputStream();
             tmpOut = socket.getOutputStream();
         } catch(IOException e) {
