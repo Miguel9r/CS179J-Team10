@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.hardware.Camera;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -48,6 +50,9 @@ import android.widget.TextView;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -69,22 +74,19 @@ public class MainActivity extends AppCompatActivity {
     private static ImageButton cameraButton;
     private static ImageButton flashButton;
     private static AlertDialog.Builder builder;
+    private static ListView listView;
+    private static ArrayList<String> tasks = new ArrayList<>();
+    private static ArrayAdapter<String> adapter;
+
     BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
-    
 
 
-    // Variables to manage BLE connection
-    private static boolean mConnectState;
-    private static boolean mServiceConnected;
-    private static BLEModuleService BLEModuleService;
 
     private static final int REQUEST_ENABLE_BLE = 1;
 
     //This is required for Android 6.0 (Marshmallow)
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
-    // Keep track of whether CapSense Notifications are on or off
-    private static boolean CapSenseNotifyState = false;
 
              
 
@@ -111,7 +113,13 @@ public class MainActivity extends AppCompatActivity {
         panTiltButton = findViewById(R.id.panTiltButton);
         cameraButton = findViewById(R.id.cameraButton);
         flashButton = findViewById(R.id.flashButton);
+        listView = findViewById(R.id.listView);
+
+
+
         flashButton.setEnabled(false);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
+        listView.setAdapter(adapter);
 
 
         //This section required for Android 6.0 (Marshmallow)
@@ -172,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableBT, REQUEST_ENABLE_BLE);
                 }
+        else
+            search_button.setEnabled(true);
     }
 
     /**
@@ -180,15 +190,28 @@ public class MainActivity extends AppCompatActivity {
      * @param view the view object
      */
     public void searchBluetooth(View view) {
-        if(mServiceConnected) {
-            BLEModuleService.scan();
+
+
+        ArrayList<DeviceItem>  deviceItemList = new ArrayList<DeviceItem>();
+        Set<BluetoothDevice> pairedDevices = BTAdapter.getBondedDevices();
+
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice device : pairedDevices) {
+                DeviceItem newDevice= new DeviceItem(device.getName(),device.getAddress());
+                deviceItemList.add(newDevice);
+            }
         }
 
-        /* After this we wait for the scan callback to detect that a device has been found */
-        /* The callback broadcasts a message which is picked up by the mGattUpdateReceiver */
-    }
+        if(deviceItemList.size() > 0)
+        {
+            for(DeviceItem device : deviceItemList)
+            {
+               tasks.add(device.getDeviceName());
+               adapter.notifyDataSetChanged();
+            }
+        }
 
-   
+    }
 
     /**
     * This section is for button activity

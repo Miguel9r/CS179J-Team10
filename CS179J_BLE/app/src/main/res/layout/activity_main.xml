@@ -35,8 +35,13 @@
             app:layout_column="1"
             app:layout_row="0" />
 
-
     </androidx.gridlayout.widget.GridLayout>
+
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="wrap_content"
+        android:layout_height="123dp" />
 
     <TableRow
         android:id="@+id/cameraArea"
@@ -52,10 +57,6 @@
             tools:textSize="30sp" />
     </TableRow>
 
-<!--    <SurfaceView-->
-<!--        android:id="@+id/surfaceView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content" />-->
 
     <GridLayout
         android:layout_width="wrap_content"
