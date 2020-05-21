@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">CS179J_BLE</string>
+    <string name="TurnOnBLE">Turn On BLE</string>
+    <string name="Search">Search</string>
+    <string name="Connect">Connect</string>
+    <string name="DiscoverServices">Discover Services</string>
+    <string name="Disconnect">Disconnect</string>
+    <string name="RedLED">RedLED</string>
+    <string name="Capsense">Capsense</string>
+    <string name="NotifyOff">NotifyOff</string>
+    <string name="Notify">Notify</string>
+    <string name="NoTouch" />
+    <string name="upButton_string">upButton_string</string>
+    <string name="camera_area">Camera Area</string>
+    <string name="leftButton_string">leftButton_string</string>
+    <string name="centerButton_string">centerButton_string</string>
+    <string name="rightButton_string" />
+    <string name="downButton_string">downButton_string</string>
+    <string name="lineaerActButton_string">linearActButton</string>
+    <string name="panTiltButton_string">panTiltButton</string>
+</resources>

@@ -1,0 +1,18 @@
+/*
+This is a BLE test
+*/
+
+void setup() {
+  Serial.begin(38400)
+}
+
+void loop() {
+   if(Serial.available() > 0) // once it's connected, it should be able to go over this
+   {
+     Serial.println("Service is connected!");
+   }
+   else
+   {
+     Serial.println("Service is not connected...")
+   }
+}

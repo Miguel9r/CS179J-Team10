@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#71909E"
+    android:orientation="vertical">
+
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="397dp"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:onClick="startBluetooth"
+            android:text="@string/TurnOnBLE"
+            android:textAllCaps="false"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="searchBluetooth"
+            android:text="@string/Search"
+            android:textAllCaps="false"
+            app:layout_column="1"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/connect_button"
+            android:layout_width="112dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="connectBluetooth"
+            android:text="@string/Connect"
+            android:textAllCaps="false"
+            app:layout_column="2"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/discoverSvc_button"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="discoverServices"
+            android:text="@string/DiscoverServices"
+            android:textAllCaps="false"
+            app:layout_column="0"
+            app:layout_row="1" />
+
+        <Button
+            android:id="@+id/disconnect_button"
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="Disconnect"
+            android:text="@string/Disconnect"
+            android:textAllCaps="false" />
+    </androidx.gridlayout.widget.GridLayout>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+    <Switch
+        android:id="@+id/led_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:switchPadding="12dp"
+        android:text="@string/RedLED"
+        android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/capsense_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingTop="1dp"
+            android:paddingEnd="6dp"
+            android:text="@string/Capsense"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/capsense_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/capsense_header"
+            android:paddingTop="1dp"
+            android:text="@string/NotifyOff"
+            android:visibility="invisible" />
+
+        <Switch
+            android:id="@+id/capsense_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:enabled="false"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:switchPadding="12dp"
+            android:text="@string/Notify"
+            android:visibility="invisible" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/cameraArea"
+        android:layout_width="match_parent"
+        android:layout_height="168dp"
+        android:background="#08E6D2">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/camera_area"
+            tools:textSize="30sp" />
+    </TableRow>
+
+<!--    <SurfaceView-->
+<!--        android:id="@+id/surfaceView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal|center_vertical"
+        android:paddingTop="5dp">
+
+        <ImageButton
+            android:id="@+id/upButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/upButton_string"
+            android:onClick="upButton_activity"
+            app:srcCompat="@drawable/ic_arrow_drop_up_24px" />
+
+
+
+        <ImageButton
+            android:id="@+id/leftButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_gravity="start"
+            android:onClick="leftButton_activity"
+            android:contentDescription="@string/leftButton_string"
+            app:srcCompat="@drawable/ic_arrow_left_24px" />
+
+        <ImageButton
+            android:id="@+id/lineaerActButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/lineaerActButton_string"
+            android:onClick="linearActButton_activity"
+            app:srcCompat="@drawable/ic_unfold_more_24px"
+            android:visibility="invisible"/>
+
+        <ImageButton
+            android:id="@+id/panTiltButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/panTiltButton_string"
+            android:onClick="panTiltButton_activity"
+            app:srcCompat="@drawable/ic_flip_camera_android_24px"
+            android:visibility="invisible"/>
+
+        <ImageButton
+            android:id="@+id/centerButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/centerButton_string"
+            android:onClick="centerButton_activity"
+            app:srcCompat="@drawable/ic_control_camera_24px" />
+
+        <ImageButton
+            android:id="@+id/rightButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:layout_gravity="end"
+            android:contentDescription="@string/rightButton_string"
+            android:onClick="rightButton_activity"
+            app:srcCompat="@drawable/ic_arrow_right_24px" />
+
+        <ImageButton
+            android:id="@+id/downButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:onClick="downButton_activity"
+            android:contentDescription="@string/downButton_string"
+            app:srcCompat="@drawable/ic_arrow_drop_down_24px" />
+
+        <ImageButton
+            android:id="@+id/flashButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:background="#FFEB3B"
+            android:paddingRight="5dp"
+            android:onClick="flashButton_activity"
+            app:srcCompat="@drawable/ic_flash_on_24px" />
+
+        <ImageButton
+            android:id="@+id/cameraButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:background="#4CAF50"
+            android:paddingLeft="5dp"
+            android:onClick="cameraButton_activity"
+            app:srcCompat="@drawable/ic_camera_alt_24px" />
+    </GridLayout>
+
+</LinearLayout>
+
