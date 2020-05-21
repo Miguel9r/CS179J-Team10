@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                DeviceItem newDevice= new DeviceItem(device.getName(),device.getAddress());
+                DeviceItem newDevice = new DeviceItem(device.getName(),device.getAddress());
                 deviceItemList.add(newDevice);
             }
         }
@@ -207,9 +207,13 @@ public class MainActivity extends AppCompatActivity {
             for(DeviceItem device : deviceItemList)
             {
                tasks.add(device.getDeviceName());
-               adapter.notifyDataSetChanged();
+
             }
+
+            adapter.notifyDataSetChanged();
         }
+
+
 
     }
 
