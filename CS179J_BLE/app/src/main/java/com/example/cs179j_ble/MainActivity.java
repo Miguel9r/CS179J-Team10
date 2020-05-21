@@ -6,11 +6,14 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -50,8 +53,10 @@ import android.widget.TextView;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -59,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     // TAG is used for informational messages
     private final static String TAG = MainActivity.class.getSimpleName();
-    ConnectThread main_socket;
 
     // Variables to access objects from the layout such as buttons, switches, values
     private static Button start_button;
@@ -79,12 +83,20 @@ public class MainActivity extends AppCompatActivity {
     private static AlertDialog.Builder builder;
     private static ListView listView;
     private static ArrayList<String> tasks = new ArrayList<>();
+
+    // Bluetooth Global Variables
     private static boolean deviceFound = false;
 
     private static ArrayAdapter<String> adapter;
+    private static String hc_06UUID = "00001101-0000-1000-8000-00805f9b34fb";
+
 
     BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
     BluetoothDevice smartTripod;
+    BluetoothDevice mmDevice;
+    BluetoothSocket mmSocket;
+    Handler mHandler;
+    ConnectedThread connectedThread;
 
 
 
@@ -189,8 +201,6 @@ public class MainActivity extends AppCompatActivity {
                 }
         else
             search_button.setEnabled(true);
-            start_button.setText("Bluetooth On!");
-            start_button.setEnabled(false);
 
     }
 
@@ -210,10 +220,9 @@ public class MainActivity extends AppCompatActivity {
                 deviceNameList.add(device.getName());
                 Log.d("Device: ", device.getName() + ": " + device.getAddress());
 
-                if(device.getName().equals("HC-06") && deviceFound)
+                if(device.getName().equals("HC-06"))
                 {
-                    deviceFound = true;
-                   main_socket = new ConnectThread(device, BTAdapter);
+                   smartTripod = device;
 
                 }
             }
@@ -233,9 +242,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void initiateBluetoothProcess(){
+        if(BTAdapter.isEnabled()){
+            //attempt to connect to bluetooth module
+            BluetoothSocket tmp = null;
+            mmDevice = smartTripod;
+            //create socket
+            try {
+                if(mmDevice != null)
+                {
+                    tmp = mmDevice.createRfcommSocketToServiceRecord(UUID.fromString(hc_06UUID));
+                    mmSocket = tmp;
+                    mmSocket.connect();
+                    Log.i("[BLUETOOTH]", "Connected to: " + mmDevice.getName());
+                }
+        }
+        catch(IOException e)
+        {
+            try{mmSocket.close();}catch(IOException c){return;}
+        }
+
+        Log.i("[BLUETOOTH]", "Creating and running Thread");
+    connectedThread = new ConnectedThread(mmSocket,mHandler);
+    connectedThread.start();
+}
+}
+
     public void connect_activity(View view)
     {
-        main_socket.run();
+        initiateBluetoothProcess();
 
     }
 
