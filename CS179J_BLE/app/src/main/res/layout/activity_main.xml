@@ -35,36 +35,7 @@
             app:layout_column="1"
             app:layout_row="0" />
 
-        <Button
-            android:id="@+id/connect_button"
-            android:layout_width="112dp"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="connectBluetooth"
-            android:text="@string/Connect"
-            android:textAllCaps="false"
-            app:layout_column="2"
-            app:layout_row="0" />
 
-        <Button
-            android:id="@+id/discoverSvc_button"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="discoverServices"
-            android:text="@string/DiscoverServices"
-            android:textAllCaps="false"
-            app:layout_column="0"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/disconnect_button"
-            android:layout_width="109dp"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="Disconnect"
-            android:text="@string/Disconnect"
-            android:textAllCaps="false" />
     </androidx.gridlayout.widget.GridLayout>
 
     <TableRow
