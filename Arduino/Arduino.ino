@@ -31,6 +31,7 @@ void setup() {
  
  
 void loop() {
+  Serial.begin(250000); //921600
   cameraLoop();
 }
 
@@ -46,7 +47,6 @@ void cameraSetup(){
   uint8_t vid, pid;
   uint8_t temp;
   Wire.begin();
-  Serial.begin(250000); //921600
   Serial.println(F("ArduCAM Start!"));
   // set the CS output:
   pinMode(CS1, OUTPUT);
