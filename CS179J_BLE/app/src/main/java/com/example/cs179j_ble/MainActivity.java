@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private static ImageButton panTiltButton;
     private static ImageButton cameraButton;
     private static ImageButton flashButton;
+    private static Button ledButton;
     private static AlertDialog.Builder builder;
     private static ListView listView;
     private static ArrayList<String> tasks = new ArrayList<>();
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         flashButton = findViewById(R.id.flashButton);
         listView = findViewById(R.id.listView);
         connectButton = findViewById(R.id.connect);
+        ledButton = findViewById(R.id.ledButton);
 
 
         flashButton.setEnabled(false);
@@ -275,6 +277,34 @@ public class MainActivity extends AppCompatActivity {
     public void connect_activity(View view)
     {
         initiateBluetoothProcess();
+
+        Log.d("HC-06:", "Device has been connected!");
+        view.setVisibility(View.INVISIBLE);
+        search_button.setVisibility(View.INVISIBLE);
+        start_button.setText("Device Connected!");
+        start_button.setEnabled(false);
+        listView.setVisibility(View.INVISIBLE);
+
+    }
+
+
+    public void LED_interactivity(View view)
+    {
+        byte[] data = new byte[]{1};
+        if (data[0] == 1) {
+            Log.d("SENDING DATA:", "Attempting to send data...");
+            connectedThread.write(data);
+            Log.d("SENDING DATA:", "Data sent!");
+            data[0] = 0;
+        }
+        else
+            {
+                Log.d("SENDING DATA:", "Attempting to send data...");
+                connectedThread.write(data);
+                Log.d("SENDING DATA:", "Data sent!");
+                data[0] = 1;
+            }
+
 
     }
 
