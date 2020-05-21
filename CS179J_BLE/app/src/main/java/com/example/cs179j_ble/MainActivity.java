@@ -192,21 +192,21 @@ public class MainActivity extends AppCompatActivity {
     public void searchBluetooth(View view) {
 
 
-        ArrayList<DeviceItem>  deviceItemList = new ArrayList<DeviceItem>();
+        ArrayList<String>  deviceNameList = new ArrayList<String>();
         Set<BluetoothDevice> pairedDevices = BTAdapter.getBondedDevices();
 
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                DeviceItem newDevice = new DeviceItem(device.getName(),device.getAddress());
-                deviceItemList.add(newDevice);
+                deviceNameList.add(device.getName());
+                Log.d("Devices: ", device.getName());
             }
         }
 
-        if(deviceItemList.size() > 0)
+        if(deviceNameList.size() > 0)
         {
-            for(DeviceItem device : deviceItemList)
+            for(String deviceName : deviceNameList)
             {
-               tasks.add(device.getDeviceName());
+               tasks.add(deviceName);
 
             }
 
