@@ -293,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
     public void LED_interactivity(View view)
     {
         byte[] data = new byte[]{1};
+        connectedThread.run();
         if (data[0] == 1) {
             Log.d("SENDING DATA:", "Attempting to send data...");
             connectedThread.write(data);
