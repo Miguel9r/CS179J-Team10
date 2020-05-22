@@ -80,21 +80,11 @@ public class ConnectedThread extends Thread
         try {
             mmOutStream.write(bytes);
 
-            // Share the sent message with the UI activity.
-            Message writtenMsg = uih.obtainMessage(
-                    MessageConstants.MESSAGE_WRITE, -1, -1, mmBuffer);
-            writtenMsg.sendToTarget();
-        } catch (IOException e) {
+
+        } catch (IOException e)
+        {
             Log.e(TAG, "Error occurred when sending data", e);
 
-            // Send a failure message back to the activity.
-            Message writeErrorMsg =
-                    uih.obtainMessage(MessageConstants.MESSAGE_TOAST);
-            Bundle bundle = new Bundle();
-            bundle.putString("toast",
-                    "Couldn't send data to the other device");
-            writeErrorMsg.setData(bundle);
-            uih.sendMessage(writeErrorMsg);
         }
     }
 
