@@ -76,17 +76,16 @@ public class ConnectedThread extends Thread
     }
 
     // Call this from the main activity to send data to the remote device.
-    public void write(byte[] bytes) {
-        try {
+    public void write(byte[] bytes){
+        try{
+            Log.i("[THREAD-CT]", "Writting bytes");
             mmOutStream.write(bytes);
-
-
-        } catch (IOException e)
+        }catch(IOException e)
         {
-            Log.e(TAG, "Error occurred when sending data", e);
-
+            Log.d("[THREAD-CT]", "ERROR writing bytes");
         }
     }
+
 
     // Call this method from the main activity to shut down the connection.
     public void cancel() {

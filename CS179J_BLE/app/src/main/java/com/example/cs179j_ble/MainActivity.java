@@ -298,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
             connectedThread.write(data);
             Log.d("SENDING DATA:", "Data sent!");
             data[0] = 0;
+            ledButton.setText("Turn Off LED");
         }
         else
             {
@@ -305,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 data[0] = 1;
+                ledButton.setText("Turn On LED");
             }
 
 
