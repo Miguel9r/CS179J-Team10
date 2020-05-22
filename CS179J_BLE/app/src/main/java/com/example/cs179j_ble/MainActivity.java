@@ -284,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
         listView.setVisibility(View.INVISIBLE);
+        ledButton.setVisibility(View.VISIBLE);
 
     }
 
