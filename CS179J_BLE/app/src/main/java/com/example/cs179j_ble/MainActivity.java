@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
 
+        connectButton.setEnabled(true);
 
     }
 
@@ -280,6 +281,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("HC-06:", "Device has been connected!");
         view.setVisibility(View.INVISIBLE);
+        view.setEnabled(false);
         search_button.setVisibility(View.INVISIBLE);
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
@@ -294,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
     {
         byte[] data = new byte[]{1};
         connectedThread.run();
+
         if (data[0] == 1) {
             Log.d("SENDING DATA:", "Attempting to send data...");
             connectedThread.write(data);
