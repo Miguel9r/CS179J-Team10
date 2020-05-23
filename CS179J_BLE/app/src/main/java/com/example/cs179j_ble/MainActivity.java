@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
 
-             
+
 
     /**
      * This is called when the main activity is first created
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         }
     } //End of section for Android 6.0 (Marshmallow)
 
-    
+
 
 
     /**
@@ -299,23 +299,22 @@ public class MainActivity extends AppCompatActivity {
 
         if(mmSocket.isConnected())
         {
-
             if (data[0] == 1) {
-
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 data[0] = 0;
+                Log.d("SENDING DATA:", "LED should turn OFF now!");
                 ledButton.setText("Turn Off LED");
             } else {
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 data[0] = 1;
+                Log.d("SENDING DATA:", "LED should turn ON now!");
                 ledButton.setText("Turn On LED");
             }
         }
-
         else{
             Log.d("SENDING DATA:", "mmSocket is NOT connected");
         }
@@ -433,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
                 Toast.makeText(getApplicationContext(),"You saved this photo!", Toast.LENGTH_SHORT).show();
-                
+
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -462,7 +461,3 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
-
-
-
-

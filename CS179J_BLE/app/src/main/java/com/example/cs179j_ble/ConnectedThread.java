@@ -57,7 +57,7 @@ public class ConnectedThread extends Thread
         Log.i("[THREAD-CT]","IO's obtained");
     }
 
-    public void run(){
+    /*public void run(){
         BufferedReader br;
         br = new BufferedReader(new InputStreamReader(mmInStream));
         while(true){
@@ -73,7 +73,7 @@ public class ConnectedThread extends Thread
             }
         }
         Log.i("[THREAD-CT]","While loop ended");
-    }
+    }*/
 
     // Call this from the main activity to send data to the remote device.
     public void write(byte[] bytes){
