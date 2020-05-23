@@ -292,27 +292,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void LED_interactivity(View view)
     {
         byte[] data = new byte[]{1};
-        connectedThread.run();
 
-        if (data[0] == 1) {
-            Log.d("SENDING DATA:", "Attempting to send data...");
-            connectedThread.write(data);
-            Log.d("SENDING DATA:", "Data sent!");
-            data[0] = 0;
-            ledButton.setText("Turn Off LED");
-        }
-        else
-            {
+        if(mmSocket.isConnected())
+        {
+
+            if (data[0] == 1) {
+
+                Log.d("SENDING DATA:", "Attempting to send data...");
+                connectedThread.write(data);
+                Log.d("SENDING DATA:", "Data sent!");
+                data[0] = 0;
+                ledButton.setText("Turn Off LED");
+            } else {
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 data[0] = 1;
                 ledButton.setText("Turn On LED");
             }
+        }
 
+        else{
+            Log.d("SENDING DATA:", "mmSocket is NOT connected");
+        }
 
     }
 
