@@ -353,21 +353,21 @@ public class MainActivity extends AppCompatActivity {
         {
           Log.d("CHANGING STATE:", "Buttons now control Linear Actuator.");
           guiState = "LinearActuator";
-          text = "Linear Actuator";
+          //text = "Linear Actuator";
           leftButton.setVisibility(View.INVISIBLE);
           rightButton.setVisibility(View.INVISIBLE);
         }
         else if (guiState == "LinearActuator") {
           Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
           guiState = "Camera";
-          text = "Camera";
+          //text = "Camera";
           leftButton.setVisibility(View.VISIBLE);
           rightButton.setVisibility(View.VISIBLE);
         }
         else if (guiState == "Camera") {
           Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
           guiState = "CarChassis";
-          text = "Car Chassis";
+         // text = "Car Chassis";
           leftButton.setVisibility(View.VISIBLE);
           rightButton.setVisibility(View.VISIBLE);
         }
