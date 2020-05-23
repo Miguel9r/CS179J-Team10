@@ -102,8 +102,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     int data = 0;
+    int i = 0;
     String guiState = "CarChassis";
-    String[] commands = new String[]{"flashOn", "flashOff", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
+    String[] commands = new String[]{"flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
   "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"};
     // data[0] = flashSystem, data[1] = snapPicture, data[2] =  data[1-4] = PanTiltKit, data[5-8] = CarChassis, data[9-10] = LinearActuator
 
@@ -297,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
           if(guiState == "CarChassis")
           {
             int val = 0;
-            for (i = 0; i<commands.length(); i++) {
+            for (i = 0; i<commands.length; i++) {
               if (commands[i]=="upCarChassis") {
                 val = i;
               }
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
           }
           else if (guiState == "LinearActuator") {
             int val = 0;
-            for (i = 0; i<commands.length(); i++) {
+            for (i = 0; i<commands.length; i++) {
               if (commands[i]=="upLinearActuator") {
                 val = i;
               }
@@ -321,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
           }
           else if (guiState == "Camera") {
             int val = 0;
-            for (i = 0; i<commands.length(); i++) {
+            for (i = 0; i<commands.length; i++) {
               if (commands[i]=="upPanTiltKit") {
                 val = i;
               }
@@ -423,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
             if(guiState == "CarChassis")
             {
               int val = 0;
-              for (i = 0; i<commands.length(); i++) {
+              for (i = 0; i<commands.length; i++) {
                 if (commands[i]=="downCarChassis") {
                   val = i;
                 }
@@ -435,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (guiState == "LinearActuator") {
               int val = 0;
-              for (i = 0; i<commands.length(); i++) {
+              for (i = 0; i<commands.length; i++) {
                 if (commands[i]=="downLinearActuator") {
                   val = i;
                 }
@@ -447,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (guiState == "Camera") {
               int val = 0;
-              for (i = 0; i<commands.length(); i++) {
+              for (i = 0; i<commands.length; i++) {
                 if (commands[i]=="downPanTiltKit") {
                   val = i;
                 }
@@ -476,8 +477,8 @@ public class MainActivity extends AppCompatActivity {
         {
             if (data == 0) {
                 Log.d("SENDING DATA:", "Attempting to send data...");
-                Log.d("SENDING DATA:", "Data: " + data);
-                Log.d("SENDING DATA:", "Data Array: " + data);
+                //Log.d("SENDING DATA:", "Data: " + data);
+                //Log.d("SENDING DATA:", "Data Array: " + data);
                 data = 1;
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
@@ -500,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
         if(mmSocket.isConnected())
         {
           int val = 0;
-          for (i = 0; i<commands.length(); i++) {
+          for (i = 0; i<commands.length; i++) {
             if (commands[i]=="snapPicture") {
               val = i;
             }
