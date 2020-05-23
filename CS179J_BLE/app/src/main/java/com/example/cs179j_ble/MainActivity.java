@@ -61,7 +61,6 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-
     // TAG is used for informational messages
     private final static String TAG = MainActivity.class.getSimpleName();
 
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayAdapter<String> adapter;
     private static String hc_06UUID = "00001101-0000-1000-8000-00805f9b34fb";
 
-
     BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
     BluetoothDevice smartTripod;
     BluetoothDevice mmDevice;
@@ -99,15 +97,12 @@ public class MainActivity extends AppCompatActivity {
     Handler mHandler;
     ConnectedThread connectedThread;
 
-
-
     private static final int REQUEST_ENABLE_BLE = 1;
 
     //This is required for Android 6.0 (Marshmallow)
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
-
-
+    byte[] data = new byte[]{1};
 
     /**
      * This is called when the main activity is first created
@@ -142,8 +137,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
         listView.setAdapter(adapter);
 
-
-
         //This section required for Android 6.0 (Marshmallow)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check 
@@ -160,9 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         } //End of section for Android 6.0 (Marshmallow)
-
-
-
     }
 
 
@@ -188,9 +178,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     } //End of section for Android 6.0 (Marshmallow)
-
-
-
 
     /**
      * This method handles the start bluetooth button
@@ -228,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                 if(device.getName().equals("HC-06"))
                 {
                    smartTripod = device;
-
                 }
             }
         }
@@ -238,14 +224,10 @@ public class MainActivity extends AppCompatActivity {
             for(String deviceName : deviceNameList)
             {
                tasks.add(deviceName);
-
             }
-
             adapter.notifyDataSetChanged();
         }
-
         connectButton.setEnabled(true);
-
     }
 
     public void initiateBluetoothProcess(){
@@ -274,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 //super.handleMessage(msg);
                 if(msg.what == ConnectedThread.RESPONSE_MESSAGE){
                     String txt = (String)msg.obj;
-                    response.append("\n" + txt);
+                    //response.append("\n" + txt);
                 }
             }
         };
@@ -299,13 +281,10 @@ public class MainActivity extends AppCompatActivity {
         listView.setVisibility(View.INVISIBLE);
         ledButton.setVisibility(View.VISIBLE);
         ledButton.setEnabled(true);
-
     }
 
     public void LED_interactivity(View view)
     {
-        byte[] data = new byte[]{1};
-
         if(mmSocket.isConnected())
         {
             if (data[0] == 1) {
@@ -370,9 +349,6 @@ public class MainActivity extends AppCompatActivity {
         leftButton.setVisibility(View.INVISIBLE);
         rightButton.setVisibility(View.INVISIBLE);
         linearActButton.setVisibility(View.VISIBLE);
-
-
-
     }
 
     public void linearActButton_activity(View view)
