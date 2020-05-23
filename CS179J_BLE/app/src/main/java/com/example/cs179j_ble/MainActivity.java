@@ -287,16 +287,18 @@ public class MainActivity extends AppCompatActivity {
         {
             if (data[0] == 1) {
                 Log.d("SENDING DATA:", "Attempting to send data...");
-                connectedThread.write(data);
-                Log.d("SENDING DATA:", "Data sent!");
+                Log.d("SENDING DATA:", "Data: " + data);
+                Log.d("SENDING DATA:", "Data Array: " + data[0]);
                 data[0] = 0;
+                connectedThread.write(data[0]);
+                Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn OFF now!");
                 ledButton.setText("Turn Off LED");
             } else {
                 Log.d("SENDING DATA:", "Attempting to send data...");
-                connectedThread.write(data);
-                Log.d("SENDING DATA:", "Data sent!");
                 data[0] = 1;
+                connectedThread.write(data[0]);
+                Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn ON now!");
                 ledButton.setText("Turn On LED");
             }
