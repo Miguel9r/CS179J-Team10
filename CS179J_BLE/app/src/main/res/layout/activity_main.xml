@@ -57,6 +57,7 @@
             app:layout_row="0"
             android:onClick="connect_activity"
             android:enabled= "false"
+            android:textAllCaps="false"
             />
 
     </androidx.gridlayout.widget.GridLayout>
