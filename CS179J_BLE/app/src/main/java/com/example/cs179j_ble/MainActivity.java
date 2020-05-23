@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
     private static ImageButton panTiltButton;
     private static ImageButton cameraButton;
     private static ImageButton flashButton;
-    private static Button ledButton;
     private static AlertDialog.Builder builder;
     private static ListView listView;
     private static ArrayList<String> tasks = new ArrayList<>();
@@ -129,10 +128,8 @@ public class MainActivity extends AppCompatActivity {
         flashButton = findViewById(R.id.flashButton);
         listView = findViewById(R.id.listView);
         connectButton = findViewById(R.id.connect);
-        ledButton = findViewById(R.id.ledButton);
 
 
-        flashButton.setEnabled(false);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
         listView.setAdapter(adapter);
@@ -277,36 +274,9 @@ public class MainActivity extends AppCompatActivity {
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
         listView.setVisibility(View.INVISIBLE);
-        ledButton.setVisibility(View.VISIBLE);
-        ledButton.setEnabled(true);
+
     }
 
-    public void LED_interactivity(View view)
-    {
-        if(mmSocket.isConnected())
-        {
-            if (data == 0) {
-                Log.d("SENDING DATA:", "Attempting to send data...");
-                Log.d("SENDING DATA:", "Data: " + data);
-                Log.d("SENDING DATA:", "Data Array: " + data);
-                data = 1;
-                connectedThread.write(data);
-                Log.d("SENDING DATA:", "Data sent!");
-                Log.d("SENDING DATA:", "LED should turn OFF now!");
-                ledButton.setText("Turn Off LED");
-            } else if(data == 1) {
-                Log.d("SENDING DATA:", "Attempting to send data...");
-                data = 0;
-                connectedThread.write(data);
-                Log.d("SENDING DATA:", "Data sent!");
-                Log.d("SENDING DATA:", "LED should turn ON now!");
-                ledButton.setText("Turn On LED");
-            }
-        }
-        else{
-            Log.d("SENDING DATA:", "mmSocket is NOT connected");
-        }
-    }
 
     /**
     * This section is for button activity
@@ -403,7 +373,29 @@ public class MainActivity extends AppCompatActivity {
 
     public void flashButton_activity(View view)
     {
+        if(mmSocket.isConnected())
+        {
+            if (data == 0) {
+                Log.d("SENDING DATA:", "Attempting to send data...");
+                Log.d("SENDING DATA:", "Data: " + data);
+                Log.d("SENDING DATA:", "Data Array: " + data);
+                data = 1;
+                connectedThread.write(data);
+                Log.d("SENDING DATA:", "Data sent!");
+                Log.d("SENDING DATA:", "LED should turn OFF now!");
 
+            } else if(data == 1) {
+                Log.d("SENDING DATA:", "Attempting to send data...");
+                data = 0;
+                connectedThread.write(data);
+                Log.d("SENDING DATA:", "Data sent!");
+                Log.d("SENDING DATA:", "LED should turn ON now!");
+
+            }
+        }
+        else{
+            Log.d("SENDING DATA:", "mmSocket is NOT connected");
+        }
     }
 
     public void cameraButton_activity(View view)

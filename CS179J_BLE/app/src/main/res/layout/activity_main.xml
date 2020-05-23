@@ -35,18 +35,6 @@
             app:layout_column="1"
             app:layout_row="0" />
 
-        <Button
-            android:id="@+id/ledButton"
-            android:layout_width="108dp"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="LED_interactivity"
-            android:text="Turn On LED"
-            android:textAllCaps="false"
-            app:layout_column="1"
-            app:layout_row="0"
-            android:visibility="invisible"
-            />
 
         <Button
             android:id="@+id/connect"
