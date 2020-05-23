@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     //This is required for Android 6.0 (Marshmallow)
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
-    byte[] data = new byte[]{1};
+    byte[] data = new byte[]{(byte) 0x01};
 
     /**
      * This is called when the main activity is first created
@@ -291,14 +291,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
-                data[0] = 0;
+                data[0] = (byte)0x00;
                 Log.d("SENDING DATA:", "LED should turn OFF now!");
                 ledButton.setText("Turn Off LED");
             } else {
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
-                data[0] = 1;
+                data[0] = (byte) 0x01;
                 Log.d("SENDING DATA:", "LED should turn ON now!");
                 ledButton.setText("Turn On LED");
             }
