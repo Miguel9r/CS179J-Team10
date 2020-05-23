@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
     String guiState = "CarChassis";
     String[] commands = new String[]{"flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
   "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"};
-    // data[0] = flashSystem, data[1] = snapPicture, data[2] =  data[1-4] = PanTiltKit, data[5-8] = CarChassis, data[9-10] = LinearActuator
 
     /**
      * This is called when the main activity is first created
@@ -122,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
         start_button = findViewById(R.id.start_button);
         search_button = findViewById(R.id.search_button);
 
-        upButton = findViewById(R.id.upButton); // data[1] PanTiltKit, data[5] Car Chassis, data[9] Linear Actuator
-        downButton = findViewById(R.id.downButton); // data[2] PanTiltKit, data[6] Car Chassis, data[10] Linear Actuator
-        leftButton = findViewById(R.id.leftButton); // data[3] PanTiltKit, data[7] Car Chassis
-        rightButton = findViewById(R.id.rightButton); // data[4] PanTiltKit, data[8] Car Chassis
+        upButton = findViewById(R.id.upButton);
+        downButton = findViewById(R.id.downButton);
+        leftButton = findViewById(R.id.leftButton);
+        rightButton = findViewById(R.id.rightButton);
         centerButton = findViewById(R.id.centerButton);// guiState: Camera, Car, LA
         cameraButton = findViewById(R.id.cameraButton);
         flashButton = findViewById(R.id.flashButton);
@@ -288,11 +287,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void upButton_activity(View view)
     {
-        // Create context for application context for toast to know where it's being displayed
-        Context context = getApplicationContext();
-        CharSequence text = "Up button pressed!";
-        int duration = Toast.LENGTH_SHORT;
-
         if(mmSocket.isConnected())
         {
           if(guiState == "CarChassis")
@@ -339,28 +333,20 @@ public class MainActivity extends AppCompatActivity {
         else{
             Log.d("SENDING DATA:", "mmSocket is NOT connected");
         }
-
-        // toast is the notification system that allows us to display text
-        Toast toast = Toast.makeText(context,text, duration);
-        toast.show();
     }
 
     public void leftButton_activity(View view)
     {
-        Context context = getApplicationContext();
+        /*Context context = getApplicationContext();
         CharSequence text = "Left button pressed!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context,text, duration);
-        toast.show();
+        toast.show();*/
     }
 
     public void centerButton_activity(View view)
     {
-      Context context = getApplicationContext();
-      CharSequence text = "";
-      int duration = Toast.LENGTH_SHORT;
-
       if(mmSocket.isConnected())
       {
         if(guiState == "CarChassis")
@@ -396,29 +382,20 @@ public class MainActivity extends AppCompatActivity {
       else{
           Log.d("SENDING DATA:", "mmSocket is NOT connected");
       }
-
-      Toast toast = Toast.makeText(context,text, duration);
-      toast.show();
     }
 
     public void rightButton_activity(View view)
     {
-        Context context = getApplicationContext();
+        /*Context context = getApplicationContext();
         CharSequence text = "Right button pressed!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context,text, duration);
-        toast.show();
+        toast.show();*/
     }
 
     public void downButton_activity(View view)
     {
-
-          // Create context for application context for toast to know where it's being displayed
-          Context context = getApplicationContext();
-          CharSequence text = "Down button pressed!";
-          int duration = Toast.LENGTH_SHORT;
-
           if(mmSocket.isConnected())
           {
             if(guiState == "CarChassis")
@@ -465,10 +442,6 @@ public class MainActivity extends AppCompatActivity {
           else{
               Log.d("SENDING DATA:", "mmSocket is NOT connected");
           }
-
-          // toast is the notification system that allows us to display text
-          Toast toast = Toast.makeText(context,text, duration);
-          toast.show();
     }
 
     public void flashButton_activity(View view)
@@ -477,8 +450,6 @@ public class MainActivity extends AppCompatActivity {
         {
             if (data == 0) {
                 Log.d("SENDING DATA:", "Attempting to send data...");
-                //Log.d("SENDING DATA:", "Data: " + data);
-                //Log.d("SENDING DATA:", "Data Array: " + data);
                 data = 1;
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
