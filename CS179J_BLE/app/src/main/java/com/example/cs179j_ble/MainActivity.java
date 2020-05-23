@@ -267,12 +267,23 @@ public class MainActivity extends AppCompatActivity {
         {
             try{mmSocket.close();}catch(IOException c){return;}
         }
+        Log.i("[BLUETOOTH]", "Creating handler");
+        mHandler = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                //super.handleMessage(msg);
+                if(msg.what == ConnectedThread.RESPONSE_MESSAGE){
+                    String txt = (String)msg.obj;
+                    response.append("\n" + txt);
+                }
+            }
+        };
 
         Log.i("[BLUETOOTH]", "Creating and running Thread");
 
     connectedThread = new ConnectedThread(mmSocket,mHandler);
     connectedThread.start();
-}
+  }
 }
 
     public void connect_activity(View view)
@@ -290,8 +301,6 @@ public class MainActivity extends AppCompatActivity {
         ledButton.setEnabled(true);
 
     }
-
-
 
     public void LED_interactivity(View view)
     {
@@ -318,7 +327,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             Log.d("SENDING DATA:", "mmSocket is NOT connected");
         }
-
     }
 
     /**

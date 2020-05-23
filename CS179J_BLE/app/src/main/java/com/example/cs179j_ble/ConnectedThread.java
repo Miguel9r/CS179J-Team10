@@ -30,8 +30,7 @@ public class ConnectedThread extends Thread
     public static final int RESPONSE_MESSAGE = 10;
     private byte[] mmBuffer; // mmBuffer store for the stream
 
-    Handler uih;
-
+    Handler uih = new Handler();
 
     public ConnectedThread(BluetoothSocket socket, Handler uih)
     {
@@ -57,7 +56,7 @@ public class ConnectedThread extends Thread
         Log.i("[THREAD-CT]","IO's obtained");
     }
 
-    /*public void run(){
+    public void run(){
         BufferedReader br;
         br = new BufferedReader(new InputStreamReader(mmInStream));
         while(true){
@@ -73,7 +72,7 @@ public class ConnectedThread extends Thread
             }
         }
         Log.i("[THREAD-CT]","While loop ended");
-    }*/
+    }
 
     // Call this from the main activity to send data to the remote device.
     public void write(byte[] bytes){
