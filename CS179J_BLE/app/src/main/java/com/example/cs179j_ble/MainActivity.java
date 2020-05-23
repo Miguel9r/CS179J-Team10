@@ -102,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     int data = 0;
+    String guiState = "CarChassis";
+    String[] commands = new String[]{"flashOn", "flashOff", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
+  "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"};
+    // data[0] = flashSystem, data[1] = snapPicture, data[2] =  data[1-4] = PanTiltKit, data[5-8] = CarChassis, data[9-10] = LinearActuator
 
     /**
      * This is called when the main activity is first created
@@ -117,13 +121,11 @@ public class MainActivity extends AppCompatActivity {
         start_button = findViewById(R.id.start_button);
         search_button = findViewById(R.id.search_button);
 
-        upButton = findViewById(R.id.upButton);
-        leftButton = findViewById(R.id.leftButton);
-        rightButton = findViewById(R.id.rightButton);
-        downButton = findViewById(R.id.downButton);
-        centerButton = findViewById(R.id.centerButton);
-        linearActButton = findViewById(R.id.lineaerActButton);
-        panTiltButton = findViewById(R.id.panTiltButton);
+        upButton = findViewById(R.id.upButton); // data[1] PanTiltKit, data[5] Car Chassis, data[9] Linear Actuator
+        downButton = findViewById(R.id.downButton); // data[2] PanTiltKit, data[6] Car Chassis, data[10] Linear Actuator
+        leftButton = findViewById(R.id.leftButton); // data[3] PanTiltKit, data[7] Car Chassis
+        rightButton = findViewById(R.id.rightButton); // data[4] PanTiltKit, data[8] Car Chassis
+        centerButton = findViewById(R.id.centerButton);// guiState: Camera, Car, LA
         cameraButton = findViewById(R.id.cameraButton);
         flashButton = findViewById(R.id.flashButton);
         listView = findViewById(R.id.listView);
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         //This section required for Android 6.0 (Marshmallow)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android M Permission check 
+            // Android M Permission check
             if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("This app needs location access ");
@@ -181,7 +183,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view the view object
      */
-    public void startBluetooth(View view) {
+    public void startBluetooth(View view)
+    {
         if (!BTAdapter.isEnabled())
         {
                     Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -225,7 +228,8 @@ public class MainActivity extends AppCompatActivity {
         connectButton.setEnabled(true);
     }
 
-    public void initiateBluetoothProcess(){
+    public void initiateBluetoothProcess()
+    {
         if(BTAdapter.isEnabled()){
             //attempt to connect to bluetooth module
             BluetoothSocket tmp = null;
@@ -258,10 +262,10 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("[BLUETOOTH]", "Creating and running Thread");
 
-    connectedThread = new ConnectedThread(mmSocket,mHandler);
-    connectedThread.start();
-  }
-}
+        connectedThread = new ConnectedThread(mmSocket,mHandler);
+        connectedThread.start();
+      }
+    }
 
     public void connect_activity(View view)
     {
@@ -274,9 +278,7 @@ public class MainActivity extends AppCompatActivity {
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
         listView.setVisibility(View.INVISIBLE);
-
     }
-
 
     /**
     * This section is for button activity
@@ -289,6 +291,53 @@ public class MainActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         CharSequence text = "Up button pressed!";
         int duration = Toast.LENGTH_SHORT;
+
+        if(mmSocket.isConnected())
+        {
+          if(guiState == "CarChassis")
+          {
+            int val = 0;
+            for (i = 0; i<commands.length(); i++) {
+              if (commands[i]=="upCarChassis") {
+                val = i;
+              }
+            }
+            Log.d("SENDING DATA:", "Value sent: " + val);
+            connectedThread.write(val);
+            Log.d("SENDING DATA:", "Data sent!");
+            Log.d("MOVING CAR CHASSIS:", "Car will move forward.");
+          }
+          else if (guiState == "LinearActuator") {
+            int val = 0;
+            for (i = 0; i<commands.length(); i++) {
+              if (commands[i]=="upLinearActuator") {
+                val = i;
+              }
+            }
+            Log.d("SENDING DATA:", "Value sent: " + val);
+            connectedThread.write(val);
+            Log.d("SENDING DATA:", "Data sent!");
+            Log.d("MOVING LA:", "Linear Actuator will move up.");
+          }
+          else if (guiState == "Camera") {
+            int val = 0;
+            for (i = 0; i<commands.length(); i++) {
+              if (commands[i]=="upPanTiltKit") {
+                val = i;
+              }
+            }
+            Log.d("SENDING DATA:", "Value sent: " + val);
+            connectedThread.write(val);
+            Log.d("SENDING DATA:", "Data sent!");
+            Log.d("MOVING CAMERA:", "Pan Tilt Kit will move up.");
+          }
+          else {
+            // empty for now
+          }
+        }
+        else{
+            Log.d("SENDING DATA:", "mmSocket is NOT connected");
+        }
 
         // toast is the notification system that allows us to display text
         Toast toast = Toast.makeText(context,text, duration);
@@ -307,49 +356,49 @@ public class MainActivity extends AppCompatActivity {
 
     public void centerButton_activity(View view)
     {
-        Context context = getApplicationContext();
-        CharSequence text = "Center button pressed!";
-        int duration = Toast.LENGTH_SHORT;
+      Context context = getApplicationContext();
+      CharSequence text = "";
+      int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context,text, duration);
-        toast.show();
+      if(mmSocket.isConnected())
+      {
+        if(guiState == "CarChassis")
+        {
+          Log.d("CHANGING STATE:", "Buttons now control Linear Actuator.");
+          guiState = "LinearActuator";
+          text = "Linear Actuator";
+          leftButton.setVisibility(View.INVISIBLE);
+          rightButton.setVisibility(View.INVISIBLE);
+        }
+        else if (guiState == "LinearActuator") {
+          Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
+          guiState = "Camera";
+          text = "Camera";
+          leftButton.setVisibility(View.VISIBLE);
+          rightButton.setVisibility(View.VISIBLE);
+        }
+        else if (guiState == "Camera") {
+          Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
+          guiState = "CarChassis";
+          text = "Car Chassis";
+          leftButton.setVisibility(View.VISIBLE);
+          rightButton.setVisibility(View.VISIBLE);
+        }
+        else {
+          guiState = "CarChassis";
+          upButton.setVisibility(View.VISIBLE);
+          downButton.setVisibility(View.VISIBLE);
+          leftButton.setVisibility(View.VISIBLE);
+          rightButton.setVisibility(View.VISIBLE);
+        }
+      }
+      else{
+          Log.d("SENDING DATA:", "mmSocket is NOT connected");
+      }
 
-        view.setVisibility(View.INVISIBLE);
-
-        leftButton.setVisibility(View.INVISIBLE);
-        rightButton.setVisibility(View.INVISIBLE);
-        linearActButton.setVisibility(View.VISIBLE);
+      Toast toast = Toast.makeText(context,text, duration);
+      toast.show();
     }
-
-    public void linearActButton_activity(View view)
-    {
-        Context context = getApplicationContext();
-        CharSequence text = "Linear Actuator button pressed!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context,text, duration);
-        toast.show();
-
-        view.setVisibility(View.INVISIBLE);
-        panTiltButton.setVisibility(View.VISIBLE);
-        leftButton.setVisibility(View.VISIBLE);
-        rightButton.setVisibility(View.VISIBLE);
-    }
-
-
-    public void panTiltButton_activity(View view)
-    {
-        Context context = getApplicationContext();
-        CharSequence text = "Pan Tilt button pressed!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context,text, duration);
-        toast.show();
-
-        view.setVisibility(View.INVISIBLE);
-        centerButton.setVisibility(View.VISIBLE);
-    }
-
 
     public void rightButton_activity(View view)
     {
@@ -363,12 +412,62 @@ public class MainActivity extends AppCompatActivity {
 
     public void downButton_activity(View view)
     {
-        Context context = getApplicationContext();
-        CharSequence text = "Down button pressed!";
-        int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context,text, duration);
-        toast.show();
+          // Create context for application context for toast to know where it's being displayed
+          Context context = getApplicationContext();
+          CharSequence text = "Down button pressed!";
+          int duration = Toast.LENGTH_SHORT;
+
+          if(mmSocket.isConnected())
+          {
+            if(guiState == "CarChassis")
+            {
+              int val = 0;
+              for (i = 0; i<commands.length(); i++) {
+                if (commands[i]=="downCarChassis") {
+                  val = i;
+                }
+              }
+              Log.d("SENDING DATA:", "Value sent: " + val);
+              connectedThread.write(val);
+              Log.d("SENDING DATA:", "Data sent!");
+              Log.d("MOVING CAR CHASSIS:", "Car will move backward.");
+            }
+            else if (guiState == "LinearActuator") {
+              int val = 0;
+              for (i = 0; i<commands.length(); i++) {
+                if (commands[i]=="downLinearActuator") {
+                  val = i;
+                }
+              }
+              Log.d("SENDING DATA:", "Value sent: " + val);
+              connectedThread.write(val);
+              Log.d("SENDING DATA:", "Data sent!");
+              Log.d("MOVING LA:", "Linear Actuator will move down.");
+            }
+            else if (guiState == "Camera") {
+              int val = 0;
+              for (i = 0; i<commands.length(); i++) {
+                if (commands[i]=="downPanTiltKit") {
+                  val = i;
+                }
+              }
+              Log.d("SENDING DATA:", "Value sent: " + val);
+              connectedThread.write(val);
+              Log.d("SENDING DATA:", "Data sent!");
+              Log.d("MOVING CAMERA:", "Pan Tilt Kit will move down.");
+            }
+            else {
+              // empty for now
+            }
+          }
+          else{
+              Log.d("SENDING DATA:", "mmSocket is NOT connected");
+          }
+
+          // toast is the notification system that allows us to display text
+          Toast toast = Toast.makeText(context,text, duration);
+          toast.show();
     }
 
     public void flashButton_activity(View view)
@@ -383,14 +482,12 @@ public class MainActivity extends AppCompatActivity {
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn ON now!");
-
             } else if(data == 1) {
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 data = 0;
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn OFF now!");
-
             }
         }
         else{
@@ -400,7 +497,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void cameraButton_activity(View view)
     {
-        builder = new AlertDialog.Builder(this);
+        if(mmSocket.isConnected())
+        {
+          int val = 0;
+          for (i = 0; i<commands.length(); i++) {
+            if (commands[i]=="snapPicture") {
+              val = i;
+            }
+          }
+          Log.d("SENDING DATA:", "Value sent: " + val);
+          connectedThread.write(val);
+          Log.d("SENDING DATA:", "Data sent!");
+          Log.d("SENDING DATA:", "Camera will snap a picture.");
+        }
+        else{
+            Log.d("SENDING DATA:", "mmSocket is NOT connected");
+        }
+        /*builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to save this photo?");
         builder.setCancelable(false);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -419,21 +532,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         AlertDialog alert = builder.create();
         alert.setTitle("Photo Captured!");
-        alert.show();
-
+        alert.show();*/
     }
-
     /**
     * End of button activity section
     * */
-
-
-
-
-
-
-
 }
