@@ -382,14 +382,14 @@ public class MainActivity extends AppCompatActivity {
                 data = 1;
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
-                Log.d("SENDING DATA:", "LED should turn OFF now!");
+                Log.d("SENDING DATA:", "LED should turn ON now!");
 
             } else if(data == 1) {
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 data = 0;
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
-                Log.d("SENDING DATA:", "LED should turn ON now!");
+                Log.d("SENDING DATA:", "LED should turn OFF now!");
 
             }
         }
