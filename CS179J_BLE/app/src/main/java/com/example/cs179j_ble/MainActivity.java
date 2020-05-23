@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     //This is required for Android 6.0 (Marshmallow)
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
-    int data = 1;
+    int data = 49;
 
     /**
      * This is called when the main activity is first created
@@ -285,18 +285,18 @@ public class MainActivity extends AppCompatActivity {
     {
         if(mmSocket.isConnected())
         {
-            if (data == 1) {
+            if (data == 49) {
                 Log.d("SENDING DATA:", "Attempting to send data...");
                 Log.d("SENDING DATA:", "Data: " + data);
                 Log.d("SENDING DATA:", "Data Array: " + data);
-                data = 0;
+                data = 48;
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn OFF now!");
                 ledButton.setText("Turn Off LED");
-            } else {
+            } else if(data == 48) {
                 Log.d("SENDING DATA:", "Attempting to send data...");
-                data = 1;
+                data = 49;
                 connectedThread.write(data);
                 Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn ON now!");
