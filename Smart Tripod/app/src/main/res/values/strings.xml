@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CS179J_BLE</string>
+    <string name="app_name">Smart Tripod</string>
     <string name="TurnOnBLE">Turn On BLE</string>
     <string name="Search">Search</string>
     <string name="Connect">Connect</string>
