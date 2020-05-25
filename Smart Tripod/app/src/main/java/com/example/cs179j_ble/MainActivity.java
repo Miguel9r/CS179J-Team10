@@ -33,6 +33,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private static AlertDialog.Builder builder;
     private static ListView listView;
     private static ArrayList<String> tasks = new ArrayList<>();
+    private static ArrayList<String> commandsList = new ArrayList<>(
+            Arrays.asList("flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
+                    "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"));
 
     // Bluetooth Global Variables
     private static boolean deviceFound = false;
@@ -315,12 +319,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void leftButton_activity(View view)
     {
-        /*Context context = getApplicationContext();
-        CharSequence text = "Left button pressed!";
-        int duration = Toast.LENGTH_SHORT;
+        if(mmSocket.isConnected())
+        {
+            if(guiState == "CarChassis")
+            {
+                Log.d("SENDING DATA:", "Left input is being sent from the Car Chassis state!");
+                connectedThread.write(commandsList.indexOf("leftCarChassis"));
 
-        Toast toast = Toast.makeText(context,text, duration);
-        toast.show();*/
+            }
+            else if(guiState == "Camera" )
+            {
+                Log.d("SENDING DATA:", "Left input is being sent from the Pan tilt state!");
+                connectedThread.write(commandsList.indexOf("leftPanTiltKit"));
+            }
+
+        }
+        else
+            Log.d("SENDING DATA:", "mmSocket is NOT connected!");
     }
 
     public void centerButton_activity(View view)
@@ -364,12 +379,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void rightButton_activity(View view)
     {
-        /*Context context = getApplicationContext();
-        CharSequence text = "Right button pressed!";
-        int duration = Toast.LENGTH_SHORT;
+        if(mmSocket.isConnected())
+        {
+            if(guiState == "CarChassis")
+            {
+                Log.d("SENDING DATA:", "Left input is being sent from the Car Chassis state!");
 
-        Toast toast = Toast.makeText(context,text, duration);
-        toast.show();*/
+                connectedThread.write(commandsList.indexOf("rightCarChassis"));
+
+            }
+            else if(guiState == "Camera" )
+            {
+                Log.d("SENDING DATA:", "Left input is being sent from the Pan tilt state!");
+                connectedThread.write(commandsList.indexOf("rightPanTiltKit"));
+            }
+
+        }
+        else
+            Log.d("SENDING DATA:", "mmSocket is NOT connected!");
     }
 
     public void downButton_activity(View view)
