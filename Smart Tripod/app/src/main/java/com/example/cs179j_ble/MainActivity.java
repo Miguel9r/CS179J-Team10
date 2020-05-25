@@ -2,56 +2,34 @@ package com.example.cs179j_ble;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.hardware.Camera;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.IBinder;
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 
-import android.os.Bundle;
+import androidx.annotation.NonNull;
+
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.os.Bundle;
-import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private static Button connectButton;
 
     private static Camera camera;
-    private static ImageButton upButton;
-    private static ImageButton leftButton;
-    private static ImageButton rightButton;
-    private static ImageButton centerButton;
-    private static ImageButton downButton;
+    private static FloatingActionButton upButton;
+    private static FloatingActionButton leftButton;
+    private static FloatingActionButton rightButton;
+    private static FloatingActionButton centerButton;
+    private static FloatingActionButton downButton;
     private static ImageButton linearActButton;
     private static ImageButton panTiltButton;
     private static ImageButton cameraButton;
@@ -121,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         start_button = findViewById(R.id.start_button);
         search_button = findViewById(R.id.search_button);
 
-        upButton = findViewById(R.id.upButton);
         downButton = findViewById(R.id.downButton);
         leftButton = findViewById(R.id.leftButton);
         rightButton = findViewById(R.id.rightButton);
@@ -130,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         flashButton = findViewById(R.id.flashButton);
         listView = findViewById(R.id.listView);
         connectButton = findViewById(R.id.connect);
+        upButton = findViewById(R.id.upButton);
 
 
 
@@ -508,6 +486,8 @@ public class MainActivity extends AppCompatActivity {
         alert.setTitle("Photo Captured!");
         alert.show();*/
     }
+
+
     /**
     * End of button activity section
     * */

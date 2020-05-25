@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#71909E"
+    android:background="#49494A"
     android:orientation="vertical">
 
 
@@ -40,13 +40,12 @@
             android:id="@+id/connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Connect"
-            app:layout_column="2"
-            app:layout_row="0"
+            android:enabled="false"
             android:onClick="connect_activity"
-            android:enabled= "false"
+            android:text="@string/Connect"
             android:textAllCaps="false"
-            />
+            app:layout_column="2"
+            app:layout_row="0" />
 
     </androidx.gridlayout.widget.GridLayout>
 
@@ -54,13 +53,13 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="123dp" />
+        android:layout_height="82dp" />
 
     <TableRow
         android:id="@+id/cameraArea"
         android:layout_width="match_parent"
         android:layout_height="168dp"
-        android:background="#08E6D2">
+        android:background="#82C1BC">
 
         <TextView
             android:id="@+id/textView2"
@@ -75,30 +74,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal|center_vertical"
-        android:paddingTop="5dp">
+        android:paddingTop="10dp">
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/upButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/upButton_string"
+            android:layout_gravity="center"
+            android:clickable="true"
             android:onClick="upButton_activity"
+            app:backgroundTint="#DFC59D"
+            app:maxImageSize="24dp"
+            app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_arrow_drop_up_24px" />
 
-
-
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/leftButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_column="0"
-            android:layout_gravity="start"
+            android:layout_gravity="center"
+            android:clickable="true"
             android:onClick="leftButton_activity"
-            android:contentDescription="@string/leftButton_string"
+            app:backgroundTint="#DFC59D"
+            app:maxImageSize="24dp"
+            app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_arrow_left_24px" />
 
         <ImageButton
@@ -110,8 +113,8 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/lineaerActButton_string"
             android:onClick="linearActButton_activity"
-            app:srcCompat="@drawable/ic_unfold_more_24px"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_unfold_more_24px" />
 
         <ImageButton
             android:id="@+id/panTiltButton"
@@ -122,39 +125,49 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/panTiltButton_string"
             android:onClick="panTiltButton_activity"
-            app:srcCompat="@drawable/ic_flip_camera_android_24px"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_flip_camera_android_24px" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/centerButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/centerButton_string"
+            android:layout_gravity="center"
+            android:clickable="true"
             android:onClick="centerButton_activity"
+            app:backgroundTint="#DFC59D"
+            app:maxImageSize="24dp"
+            app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_control_camera_24px" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/rightButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_column="2"
-            android:layout_gravity="end"
-            android:contentDescription="@string/rightButton_string"
+            android:layout_gravity="center"
+            android:clickable="true"
             android:onClick="rightButton_activity"
+            app:backgroundTint="#DFC59D"
+            app:maxImageSize="24dp"
+            app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_arrow_right_24px" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/downButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="2"
             android:layout_column="1"
+            android:layout_gravity="center"
+            android:clickable="true"
             android:onClick="downButton_activity"
-            android:contentDescription="@string/downButton_string"
+            app:backgroundTint="#DFC59D"
+            app:maxImageSize="24dp"
+            app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_arrow_drop_down_24px" />
 
         <ImageButton
@@ -166,8 +179,7 @@
             android:layout_gravity="start|center_vertical"
             android:background="#FFEB3B"
             android:onClick="flashButton_activity"
-            app:srcCompat="@drawable/ic_flash_on_24px"
-            />
+            app:srcCompat="@drawable/ic_flash_on_24px" />
 
         <ImageButton
             android:id="@+id/cameraButton"
@@ -179,6 +191,8 @@
             android:background="#4CAF50"
             android:onClick="cameraButton_activity"
             app:srcCompat="@drawable/ic_camera_alt_24px" />
+
+
     </GridLayout>
 
 </LinearLayout>
