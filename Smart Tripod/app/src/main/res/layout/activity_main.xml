@@ -104,30 +104,6 @@
             app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_arrow_left_24px" />
 
-        <ImageButton
-            android:id="@+id/lineaerActButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/lineaerActButton_string"
-            android:onClick="linearActButton_activity"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/ic_unfold_more_24px" />
-
-        <ImageButton
-            android:id="@+id/panTiltButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/panTiltButton_string"
-            android:onClick="panTiltButton_activity"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/ic_flip_camera_android_24px" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/centerButton"
             android:layout_width="wrap_content"
@@ -140,7 +116,40 @@
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_control_camera_24px" />
+            app:srcCompat="@drawable/ic_control_camera_24px"
+            app:useCompatPadding="true" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/linearActuator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:onClick="linearActuator_activity"
+            android:visibility="invisible"
+            app:backgroundTint="#DFC59D"
+            app:maxImageSize="24dp"
+            app:rippleColor="#DAE5E4"
+            app:srcCompat="@drawable/ic_unfold_more_24px" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cameraPanTilt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:onClick="cameraPanTilt_activity"
+            android:visibility="invisible"
+            app:backgroundTint="#DFC59D"
+            app:maxImageSize="24dp"
+            app:rippleColor="#DAE5E4"
+            app:srcCompat="@drawable/ic_flip_camera_android_24px" />
+
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/rightButton"

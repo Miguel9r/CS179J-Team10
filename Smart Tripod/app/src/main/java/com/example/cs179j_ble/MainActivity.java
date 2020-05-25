@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private static FloatingActionButton rightButton;
     private static FloatingActionButton centerButton;
     private static FloatingActionButton downButton;
-    private static ImageButton linearActButton;
-    private static ImageButton panTiltButton;
+    private static FloatingActionButton linearActButton;
+    private static FloatingActionButton panTiltButton;
     private static ImageButton cameraButton;
     private static ImageButton flashButton;
     private static AlertDialog.Builder builder;
@@ -112,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         connectButton = findViewById(R.id.connect);
         upButton = findViewById(R.id.upButton);
-
+        linearActButton = findViewById(R.id.linearActuator);
+        panTiltButton = findViewById(R.id.cameraPanTilt);
 
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
@@ -273,40 +276,58 @@ public class MainActivity extends AppCompatActivity {
         {
           if(guiState == "CarChassis")
           {
-            int val = 0;
-            for (i = 0; i<commands.length; i++) {
-              if (commands[i]=="upCarChassis") {
-                val = i;
-              }
-            }
-            Log.d("SENDING DATA:", "Value sent: " + val);
-            connectedThread.write(val);
+//            int val = 0;
+//            for (i = 0; i<commands.length; i++) {
+//              if (commands[i]=="upCarChassis") {
+//                val = i;
+//              }
+//            }
+//            Log.d("SENDING DATA:", "Value sent: " + val);
+//            connectedThread.write(val);
+//            Log.d("SENDING DATA:", "Data sent!");
+//            Log.d("MOVING CAR CHASSIS:", "Car will move forward.");
+            Log.d("STATE: ", "Car Chassis");
+            Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("upCarChassis"));
+            connectedThread.write(commandsList.indexOf("upCarChassis"));
             Log.d("SENDING DATA:", "Data sent!");
             Log.d("MOVING CAR CHASSIS:", "Car will move forward.");
+
+
           }
           else if (guiState == "LinearActuator") {
-            int val = 0;
-            for (i = 0; i<commands.length; i++) {
-              if (commands[i]=="upLinearActuator") {
-                val = i;
-              }
-            }
-            Log.d("SENDING DATA:", "Value sent: " + val);
-            connectedThread.write(val);
-            Log.d("SENDING DATA:", "Data sent!");
-            Log.d("MOVING LA:", "Linear Actuator will move up.");
+//            int val = 0;
+//            for (i = 0; i<commands.length; i++) {
+//              if (commands[i]=="upLinearActuator") {
+//                val = i;
+//              }
+//            }
+//            Log.d("SENDING DATA:", "Value sent: " + val);
+//            connectedThread.write(val);
+//            Log.d("SENDING DATA:", "Data sent!");
+//            Log.d("MOVING LA:", "Linear Actuator will move up.");
+              Log.d("STATE: ", "Linear Actuator");
+              Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("upLinearActuator"));
+              connectedThread.write(commandsList.indexOf("upLinearActuator"));
+              Log.d("SENDING DATA:", "Data sent!");
+              Log.d("MOVING LA:", "Linear Actuator will move up.");
           }
           else if (guiState == "Camera") {
-            int val = 0;
-            for (i = 0; i<commands.length; i++) {
-              if (commands[i]=="upPanTiltKit") {
-                val = i;
-              }
-            }
-            Log.d("SENDING DATA:", "Value sent: " + val);
-            connectedThread.write(val);
-            Log.d("SENDING DATA:", "Data sent!");
-            Log.d("MOVING CAMERA:", "Pan Tilt Kit will move up.");
+//            int val = 0;
+//            for (i = 0; i<commands.length; i++) {
+//              if (commands[i]=="upPanTiltKit") {
+//                val = i;
+//              }
+//            }
+//            Log.d("SENDING DATA:", "Value sent: " + val);
+//            connectedThread.write(val);
+//            Log.d("SENDING DATA:", "Data sent!");
+//            Log.d("MOVING CAMERA:", "Pan Tilt Kit will move up.");
+              Log.d("STATE: ", "Camera");
+              Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("upPanTiltKit"));
+              connectedThread.write(commandsList.indexOf("upPanTiltKit"));
+              Log.d("SENDING DATA:", "Data sent!");
+              Log.d("MOVING CAMERA:", "Pan Tilt Kit will move up.");
+
           }
           else {
             // empty for now
@@ -323,14 +344,21 @@ public class MainActivity extends AppCompatActivity {
         {
             if(guiState == "CarChassis")
             {
-                Log.d("SENDING DATA:", "Left input is being sent from the Car Chassis state!");
+                Log.d("STATE: ", "Car Chassis");
+                Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("leftCarChassis"));
                 connectedThread.write(commandsList.indexOf("leftCarChassis"));
+                Log.d("SENDING DATA:", "Data sent!");
+                Log.d("MOVING CAR CHASSIS:", "Car will move left.");
+
 
             }
             else if(guiState == "Camera" )
             {
-                Log.d("SENDING DATA:", "Left input is being sent from the Pan tilt state!");
+                Log.d("STATE: ", "Camera");
+                Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("leftPanTiltKit"));
                 connectedThread.write(commandsList.indexOf("leftPanTiltKit"));
+                Log.d("SENDING DATA:", "Data Sent!");
+                Log.d("MOVING CAMERA:", "Pan Tilt Kit will move left.");
             }
 
         }
@@ -340,41 +368,92 @@ public class MainActivity extends AppCompatActivity {
 
     public void centerButton_activity(View view)
     {
-      if(mmSocket.isConnected())
-      {
-        if(guiState == "CarChassis")
-        {
-          Log.d("CHANGING STATE:", "Buttons now control Linear Actuator.");
-          guiState = "LinearActuator";
-          //text = "Linear Actuator";
-          leftButton.setVisibility(View.INVISIBLE);
-          rightButton.setVisibility(View.INVISIBLE);
-        }
-        else if (guiState == "LinearActuator") {
-          Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
-          guiState = "Camera";
-          //text = "Camera";
-          leftButton.setVisibility(View.VISIBLE);
-          rightButton.setVisibility(View.VISIBLE);
-        }
-        else if (guiState == "Camera") {
-          Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
-          guiState = "CarChassis";
-         // text = "Car Chassis";
-          leftButton.setVisibility(View.VISIBLE);
-          rightButton.setVisibility(View.VISIBLE);
-        }
-        else {
-          guiState = "CarChassis";
-          upButton.setVisibility(View.VISIBLE);
-          downButton.setVisibility(View.VISIBLE);
-          leftButton.setVisibility(View.VISIBLE);
-          rightButton.setVisibility(View.VISIBLE);
-        }
-      }
-      else{
-          Log.d("SENDING DATA:", "mmSocket is NOT connected");
-      }
+        Context context = getApplicationContext();
+        CharSequence text = "Controlling: Linear Actuator!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+
+
+        guiState = "LinearActuator";
+        Log.d("CHANGING STATE: ", "Buttons should now control the Linear Actuator");
+        leftButton.setVisibility(View.INVISIBLE);
+        rightButton.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.INVISIBLE);
+        linearActButton.setVisibility(View.VISIBLE);
+
+//      if(mmSocket.isConnected())
+//      {
+//        if(guiState == "CarChassis")
+//        {
+//          Log.d("CHANGING STATE:", "Buttons now control Linear Actuator.");
+//          guiState = "LinearActuator";
+//          //text = "Linear Actuator";
+//          leftButton.setVisibility(View.INVISIBLE);
+//          rightButton.setVisibility(View.INVISIBLE);
+//        }
+//        else if (guiState == "LinearActuator") {
+//          Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
+//          guiState = "Camera";
+//          //text = "Camera";
+//          leftButton.setVisibility(View.VISIBLE);
+//          rightButton.setVisibility(View.VISIBLE);
+//        }
+//        else if (guiState == "Camera") {
+//          Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
+//          guiState = "CarChassis";
+//         // text = "Car Chassis";
+//          leftButton.setVisibility(View.VISIBLE);
+//          rightButton.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//          guiState = "CarChassis";
+//          upButton.setVisibility(View.VISIBLE);
+//          downButton.setVisibility(View.VISIBLE);
+//          leftButton.setVisibility(View.VISIBLE);
+//          rightButton.setVisibility(View.VISIBLE);
+//        }
+//      }
+//      else{
+//          Log.d("SENDING DATA:", "mmSocket is NOT connected");
+//      }
+    }
+
+    public void linearActuator_activity(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Controlling: Pan Tilt Camera!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
+        guiState = "Camera";
+
+        leftButton.setVisibility(View.VISIBLE);
+        rightButton.setVisibility(View.VISIBLE);
+        view.setVisibility(View.INVISIBLE);
+        panTiltButton.setVisibility(View.VISIBLE);
+    }
+
+
+    public void cameraPanTilt_activity (View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Controlling: Car Chassis!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
+        guiState = "CarChassis";
+
+        view.setVisibility(View.INVISIBLE);
+        centerButton.setVisibility(View.VISIBLE);
     }
 
     public void rightButton_activity(View view)
@@ -383,15 +462,21 @@ public class MainActivity extends AppCompatActivity {
         {
             if(guiState == "CarChassis")
             {
-                Log.d("SENDING DATA:", "Left input is being sent from the Car Chassis state!");
-
+                Log.d("STATE: ", "Car Chassis");
+                Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("rightCarChassis"));
                 connectedThread.write(commandsList.indexOf("rightCarChassis"));
+                Log.d("SENDING DATA:", "Data sent!");
+                Log.d("MOVING CAR CHASSIS:", "Car will move right.");
+
 
             }
             else if(guiState == "Camera" )
             {
-                Log.d("SENDING DATA:", "Left input is being sent from the Pan tilt state!");
+                Log.d("STATE: ", "Camera");
+                Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("rightPanTiltKit"));
                 connectedThread.write(commandsList.indexOf("rightPanTiltKit"));
+                Log.d("SENDING DATA:", "Data Sent!");
+                Log.d("MOVING CAMERA:", "Pan Tilt Kit will move right.");
             }
 
         }
@@ -405,38 +490,40 @@ public class MainActivity extends AppCompatActivity {
           {
             if(guiState == "CarChassis")
             {
-              int val = 0;
-              for (i = 0; i<commands.length; i++) {
-                if (commands[i]=="downCarChassis") {
-                  val = i;
-                }
-              }
-              Log.d("SENDING DATA:", "Value sent: " + val);
-              connectedThread.write(val);
+//              int val = 0;
+//              for (i = 0; i<commands.length; i++) {
+//                if (commands[i]=="downCarChassis") {
+//                  val = i;
+//                }
+//              }
+              Log.d("STATE: ", "Car Chassis");
+              Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("downCarChassis"));
+              connectedThread.write(commandsList.indexOf("downCarChassis"));
               Log.d("SENDING DATA:", "Data sent!");
               Log.d("MOVING CAR CHASSIS:", "Car will move backward.");
             }
             else if (guiState == "LinearActuator") {
-              int val = 0;
-              for (i = 0; i<commands.length; i++) {
-                if (commands[i]=="downLinearActuator") {
-                  val = i;
-                }
-              }
-              Log.d("SENDING DATA:", "Value sent: " + val);
-              connectedThread.write(val);
+//              int val = 0;
+//              for (i = 0; i<commands.length; i++) {
+//                if (commands[i]=="downLinearActuator") {
+//                  val = i;
+//                }
+//              }
+              Log.d("STATE: ", "Linear Actuator");
+              Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("downLinearActuator"));
+              connectedThread.write(commandsList.indexOf("downLinearActuator"));
               Log.d("SENDING DATA:", "Data sent!");
               Log.d("MOVING LA:", "Linear Actuator will move down.");
             }
             else if (guiState == "Camera") {
-              int val = 0;
-              for (i = 0; i<commands.length; i++) {
-                if (commands[i]=="downPanTiltKit") {
-                  val = i;
-                }
-              }
-              Log.d("SENDING DATA:", "Value sent: " + val);
-              connectedThread.write(val);
+//              int val = 0;
+//              for (i = 0; i<commands.length; i++) {
+//                if (commands[i]=="downPanTiltKit") {
+//                  val = i;
+//                }
+//              }
+              Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("downPanTiltKit"));
+              connectedThread.write(commandsList.indexOf("downPanTiltKit"));
               Log.d("SENDING DATA:", "Data sent!");
               Log.d("MOVING CAMERA:", "Pan Tilt Kit will move down.");
             }
