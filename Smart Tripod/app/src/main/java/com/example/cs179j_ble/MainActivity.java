@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
     String[] commands = new String[]{"flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
   "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"};
 
+
+
     /**
      * This is called when the main activity is first created
      *
