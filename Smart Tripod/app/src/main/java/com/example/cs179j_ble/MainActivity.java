@@ -543,15 +543,15 @@ public class MainActivity extends AppCompatActivity {
         if(mmSocket.isConnected())
         {
             if (data == 0) {
-                Log.d("SENDING DATA:", "Attempting to send data...");
+                Log.d("SENDING DATA:", "Attempting to send data..." + commandsList.indexOf("flashOn"));
                 data = 1;
-                connectedThread.write(data);
+                connectedThread.write(commandsList.indexOf("flashOn"));
                 Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn ON now!");
             } else if(data == 1) {
-                Log.d("SENDING DATA:", "Attempting to send data...");
+                Log.d("SENDING DATA:", "Attempting to send data..." + commandsList.indexOf("flashOff"));
                 data = 0;
-                connectedThread.write(data);
+                connectedThread.write(commandsList.indexOf("flashOff"));
                 Log.d("SENDING DATA:", "Data sent!");
                 Log.d("SENDING DATA:", "LED should turn OFF now!");
             }
@@ -565,21 +565,21 @@ public class MainActivity extends AppCompatActivity {
     {
         if(mmSocket.isConnected())
         {
-          int val = 0;
-          for (i = 0; i<commands.length; i++) {
-            if (commands[i]=="snapPicture") {
-              val = i;
-            }
-          }
-          Log.d("SENDING DATA:", "Value sent: " + val);
-          connectedThread.write(val);
+//          int val = 0;
+//          for (i = 0; i<commands.length; i++) {
+//            if (commands[i]=="snapPicture") {
+//              val = i;
+//            }
+//          }
+          Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("snapPicture"));
+          connectedThread.write(commandsList.indexOf("snapPicture"));
           Log.d("SENDING DATA:", "Data sent!");
           Log.d("SENDING DATA:", "Camera will snap a picture.");
         }
         else{
             Log.d("SENDING DATA:", "mmSocket is NOT connected");
         }
-        /*builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to save this photo?");
         builder.setCancelable(false);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -600,7 +600,7 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.setTitle("Photo Captured!");
-        alert.show();*/
+        alert.show();
     }
 
 
