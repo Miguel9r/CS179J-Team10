@@ -119,13 +119,6 @@ public class MainActivity extends AppCompatActivity {
         linearActButton = findViewById(R.id.linearActuator);
         panTiltButton = findViewById(R.id.cameraPanTilt);
 
-        int i = 0;
-        for (String command : commandsList)
-        {
-            Log.d("COMMANDS: ", command + ": " +  i);
-            i++;
-        }
-
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
         listView.setAdapter(adapter);
