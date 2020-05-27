@@ -1,0 +1,14 @@
+D/COMMANDS::
+    flashOff: 0
+    flashOn: 1
+    snapPicture: 2
+    upPanTiltKit: 3
+    downPanTiltKit: 4
+    leftPanTiltKit: 5
+    rightPanTiltKit: 6
+    upLinearActuator: 7
+    downLinearActuator: 8
+    upCarChassis: 9
+    downCarChassis: 10
+    leftCarChassis: 11
+    rightCarChassis: 12
