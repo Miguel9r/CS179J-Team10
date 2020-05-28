@@ -29,6 +29,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static Button connectButton;
 
     private static Camera camera;
+    private static TextView cameraArea_Text;
     private static FloatingActionButton upButton;
     private static FloatingActionButton leftButton;
     private static FloatingActionButton rightButton;
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         upButton = findViewById(R.id.upButton);
         linearActButton = findViewById(R.id.linearActuator);
         panTiltButton = findViewById(R.id.cameraPanTilt);
+        cameraArea_Text = findViewById(R.id.cameraAreaText);
 
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
@@ -244,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
                 if(msg.what == ConnectedThread.RESPONSE_MESSAGE){
                     String txt = (String)msg.obj;
                     //response.append("\n" + txt);
+
+                    cameraArea_Text.setText(txt);
                 }
 
 
