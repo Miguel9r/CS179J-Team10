@@ -60,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
     private static FloatingActionButton downButton;
     private static FloatingActionButton linearActButton;
     private static FloatingActionButton panTiltButton;
-    private static ImageButton cameraButton;
-    private static ImageButton flashButton;
+    private static FloatingActionButton cameraButton;
+    private static FloatingActionButton flashButton;
     private static AlertDialog.Builder builder;
+    private static TextView controllerState;
     private static ListView listView;
     private static ArrayList<String> tasks = new ArrayList<>();
     private static ArrayList<String> commandsList = new ArrayList<>(
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         centerButton = findViewById(R.id.centerButton);// guiState: Camera, Car, LA
         cameraButton = findViewById(R.id.cameraButton);
         flashButton = findViewById(R.id.flashButton);
+        controllerState = findViewById(R.id.controllerState);
         listView = findViewById(R.id.listView);
         connectButton = findViewById(R.id.connect);
         upButton = findViewById(R.id.upButton);
@@ -175,12 +177,16 @@ public class MainActivity extends AppCompatActivity {
     {
         if (!BTAdapter.isEnabled())
         {
-                    Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableBT, REQUEST_ENABLE_BLE);
+            Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBT, REQUEST_ENABLE_BLE);
         }
-        else
+        else {
             search_button.setEnabled(true);
-
+            controllerState.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+            String state_text = baseString + guiState;
+            controllerState.setText(state_text);
+        }
     }
 
     /**

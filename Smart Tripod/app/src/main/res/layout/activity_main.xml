@@ -44,7 +44,8 @@
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_arrow_drop_up_24px" />
+            app:srcCompat="@drawable/ic_arrow_drop_up_24px"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/leftButton"
@@ -58,7 +59,8 @@
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_arrow_left_24px" />
+            app:srcCompat="@drawable/ic_arrow_left_24px"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/centerButton"
@@ -73,7 +75,8 @@
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_control_camera_24px"
-            app:useCompatPadding="true" />
+            app:useCompatPadding="true"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/linearActuator"
@@ -88,7 +91,8 @@
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_unfold_more_24px" />
+            app:srcCompat="@drawable/ic_unfold_more_24px"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/cameraPanTilt"
@@ -103,7 +107,8 @@
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_flip_camera_android_24px" />
+            app:srcCompat="@drawable/ic_flip_camera_android_24px"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/rightButton"
@@ -117,7 +122,8 @@
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_arrow_right_24px" />
+            app:srcCompat="@drawable/ic_arrow_right_24px"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/downButton"
@@ -132,7 +138,8 @@
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_arrow_drop_down_24px"/>
+            app:srcCompat="@drawable/ic_arrow_drop_down_24px"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/flashButton"
@@ -198,6 +205,16 @@
             app:layout_row="0" />
 
     </androidx.gridlayout.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/controllerState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/listView"
