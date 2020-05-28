@@ -55,10 +55,11 @@
         android:layout_width="wrap_content"
         android:layout_height="82dp" />
 
+
     <TableRow
         android:id="@+id/cameraArea"
         android:layout_width="match_parent"
-        android:layout_height="168dp"
+        android:layout_height="248dp"
         android:background="#82C1BC">
 
         <TextView
@@ -68,7 +69,6 @@
             android:text="@string/camera_area"
             tools:textSize="30sp" />
     </TableRow>
-
 
     <GridLayout
         android:layout_width="wrap_content"

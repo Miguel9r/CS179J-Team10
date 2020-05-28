@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static ArrayAdapter<String> adapter;
     private static String hc_06UUID = "00001101-0000-1000-8000-00805f9b34fb";
+    private static String baseString = "Controlling: ";
 
     BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
     BluetoothDevice smartTripod;
@@ -272,6 +273,9 @@ public class MainActivity extends AppCompatActivity {
             tasks.remove(i);
         }
 
+        String state_controller = baseString + guiState;
+
+        tasks.add(state_controller);
         adapter.notifyDataSetChanged();
     }
 
@@ -393,6 +397,8 @@ public class MainActivity extends AppCompatActivity {
         rightButton.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
         linearActButton.setVisibility(View.VISIBLE);
+
+
 
 //      if(mmSocket.isConnected())
 //      {
