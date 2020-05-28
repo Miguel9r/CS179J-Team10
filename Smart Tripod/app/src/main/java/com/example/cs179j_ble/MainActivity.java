@@ -244,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
                     String txt = (String)msg.obj;
                     //response.append("\n" + txt);
                 }
+
+
             }
         };
 
@@ -264,7 +266,13 @@ public class MainActivity extends AppCompatActivity {
         search_button.setVisibility(View.INVISIBLE);
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
-        listView.setVisibility(View.INVISIBLE);
+
+        for(int i = tasks.size() -1 ; i >=0; i--)
+        {
+            tasks.remove(i);
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -565,6 +573,8 @@ public class MainActivity extends AppCompatActivity {
     {
         if(mmSocket.isConnected())
         {
+            connectedThread.run();
+            Log.d("CT-RUN:", " Message: " + mHandler.obtainMessage());
 //          int val = 0;
 //          for (i = 0; i<commands.length; i++) {
 //            if (commands[i]=="snapPicture") {
