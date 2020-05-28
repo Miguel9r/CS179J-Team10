@@ -49,13 +49,6 @@
 
     </androidx.gridlayout.widget.GridLayout>
 
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="wrap_content"
-        android:layout_height="82dp" />
-
-
     <TableRow
         android:id="@+id/cameraArea"
         android:layout_width="match_parent"
@@ -203,6 +196,11 @@
 
 
     </GridLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="wrap_content"
+        android:layout_height="82dp" />
 
 </LinearLayout>
 
