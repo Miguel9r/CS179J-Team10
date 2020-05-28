@@ -8,66 +8,29 @@
     android:background="#49494A"
     android:orientation="vertical">
 
-
-    <androidx.gridlayout.widget.GridLayout
-        android:layout_width="397dp"
-        android:layout_height="wrap_content">
-
-
-        <Button
-            android:id="@+id/start_button"
-            android:layout_width="118dp"
-            android:layout_height="wrap_content"
-            android:enabled="true"
-            android:onClick="startBluetooth"
-            android:text="@string/TurnOnBLE"
-            android:textAllCaps="false"
-            app:layout_row="0" />
-
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="108dp"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="searchBluetooth"
-            android:text="@string/Search"
-            android:textAllCaps="false"
-            app:layout_column="1"
-            app:layout_row="0" />
-
-
-        <Button
-            android:id="@+id/connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="connect_activity"
-            android:text="@string/Connect"
-            android:textAllCaps="false"
-            app:layout_column="2"
-            app:layout_row="0" />
-
-    </androidx.gridlayout.widget.GridLayout>
-
     <TableRow
         android:id="@+id/cameraArea"
         android:layout_width="match_parent"
-        android:layout_height="248dp"
-        android:background="#82C1BC">
+        android:layout_height="300dp"
+        android:background="#8FBEDF">
 
         <TextView
             android:id="@+id/cameraAreaText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:text="@string/camera_area"
-            tools:textSize="30sp" />
+            tools:textSize="30sp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
     </TableRow>
 
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal|center_vertical"
-        android:paddingTop="10dp">
+        android:paddingTop="15dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/upButton"
@@ -142,8 +105,6 @@
             app:rippleColor="#DAE5E4"
             app:srcCompat="@drawable/ic_flip_camera_android_24px" />
 
-
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/rightButton"
             android:layout_width="wrap_content"
@@ -167,40 +128,83 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:onClick="downButton_activity"
+            android:layout_marginBottom="20dp"
             app:backgroundTint="#DFC59D"
             app:maxImageSize="24dp"
             app:rippleColor="#DAE5E4"
-            app:srcCompat="@drawable/ic_arrow_drop_down_24px" />
+            app:srcCompat="@drawable/ic_arrow_drop_down_24px"/>
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/flashButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="2"
             android:layout_column="0"
             android:layout_gravity="start|center_vertical"
-            android:background="#FFEB3B"
+            android:layout_marginBottom="20dp"
+            app:backgroundTint="#FFEB3B"
             android:onClick="flashButton_activity"
             app:srcCompat="@drawable/ic_flash_on_24px" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/cameraButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="2"
             android:layout_column="2"
             android:layout_gravity="center|end"
-            android:background="#4CAF50"
+            android:layout_marginBottom="20dp"
+            app:backgroundTint="#4CAF50"
             android:onClick="cameraButton_activity"
             app:srcCompat="@drawable/ic_camera_alt_24px" />
 
-
     </GridLayout>
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:onClick="startBluetooth"
+            android:text="@string/TurnOnBLE"
+            android:textAllCaps="false"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="searchBluetooth"
+            android:text="@string/Search"
+            android:textAllCaps="false"
+            app:layout_column="1"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="connect_activity"
+            android:text="@string/Connect"
+            android:textAllCaps="false"
+            app:layout_column="2"
+            app:layout_row="0" />
+
+    </androidx.gridlayout.widget.GridLayout>
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="wrap_content"
-        android:layout_height="82dp" />
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#49494A"/>
 
 </LinearLayout>
-

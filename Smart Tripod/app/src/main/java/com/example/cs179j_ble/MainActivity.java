@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
     String[] commands = new String[]{"flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
   "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"};
 
-
-
     /**
      * This is called when the main activity is first created
      *
@@ -122,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         linearActButton = findViewById(R.id.linearActuator);
         panTiltButton = findViewById(R.id.cameraPanTilt);
         cameraArea_Text = findViewById(R.id.cameraAreaText);
-
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
         listView.setAdapter(adapter);
