@@ -204,17 +204,17 @@
             app:layout_column="2"
             app:layout_row="0" />
 
-    </androidx.gridlayout.widget.GridLayout>
+        <TextView
+            android:id="@+id/controllerState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/controllerState"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="TextView"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        android:visibility="gone"/>
+    </androidx.gridlayout.widget.GridLayout>
 
     <ListView
         android:id="@+id/listView"
