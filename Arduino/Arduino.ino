@@ -44,7 +44,7 @@ int angleStep = 5;  // each servo will only move at 5 degrees per quarter-second
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(250000); //921600
+  Serial.begin(9600); //921600
   linearActuatorSetup();
   cameraSetup();
   chasisSetup();
