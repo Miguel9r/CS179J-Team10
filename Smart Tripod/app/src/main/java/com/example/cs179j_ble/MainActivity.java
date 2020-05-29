@@ -272,15 +272,12 @@ public class MainActivity extends AppCompatActivity {
         initiateBluetoothProcess();
 
         Log.d("HC-06:", "Device has been connected!");
-        view.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.GONE);
         view.setEnabled(false);
         controllerState.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
         String state_text = baseString + guiState;
         controllerState.setText(state_text);
-        search_button.setVisibility(View.INVISIBLE);
-        start_button.setText("Device Connected!");
-        start_button.setEnabled(false);
 
         for(int i = tasks.size() -1 ; i >=0; i--)
         {
@@ -403,10 +400,10 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-
-
         guiState = "LinearActuator";
         Log.d("CHANGING STATE: ", "Buttons should now control the Linear Actuator");
+        String state_text = baseString + guiState;
+        controllerState.setText(state_text);
         leftButton.setVisibility(View.INVISIBLE);
         rightButton.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
@@ -463,6 +460,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
         guiState = "Camera";
 
+        String state_text = baseString + guiState;
+        controllerState.setText(state_text);
         leftButton.setVisibility(View.VISIBLE);
         rightButton.setVisibility(View.VISIBLE);
         view.setVisibility(View.INVISIBLE);
@@ -482,6 +481,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
         guiState = "CarChassis";
 
+        String state_text = baseString + guiState;
+        controllerState.setText(state_text);
         view.setVisibility(View.INVISIBLE);
         centerButton.setVisibility(View.VISIBLE);
     }
