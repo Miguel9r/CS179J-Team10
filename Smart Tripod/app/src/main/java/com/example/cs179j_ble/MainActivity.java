@@ -274,14 +274,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("HC-06:", "Device has been connected!");
         view.setVisibility(View.GONE);
         view.setEnabled(false);
-        controllerState.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
-        String state_text = baseString + guiState;
-        controllerState.setText(state_text);
 
         search_button.setVisibility(View.GONE);
         start_button.setVisibility(View.GONE);
         connectButton.setVisibility(View.GONE);
+        controllerState.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+        String state_text = baseString + guiState;
+        controllerState.setText(state_text);
     }
 
     /**
