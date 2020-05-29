@@ -280,8 +280,8 @@ public class MainActivity extends AppCompatActivity {
         controllerState.setText(state_text);
 
         search_button.setVisibility(View.GONE);
-        start_button.setText("Device Connected!");
-        start_button.setEnabled(false);
+        start_button.setVisibility(View.GONE);
+        connectButton.setVisibility(View.GONE);
     }
 
     /**
@@ -415,8 +415,6 @@ public class MainActivity extends AppCompatActivity {
                 connectedThread.write(commandsList.indexOf("rightCarChassis"));
                 Log.d("SENDING DATA:", "Data sent!");
                 Log.d("MOVING CAR CHASSIS:", "Car will move right.");
-
-
             }
             else if(guiState == "Pan Tilt" )
             {
@@ -426,7 +424,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("SENDING DATA:", "Data Sent!");
                 Log.d("MOVING CAMERA:", "Pan Tilt Kit will move right.");
             }
-
         }
         else
             Log.d("SENDING DATA:", "mmSocket is NOT connected!");
