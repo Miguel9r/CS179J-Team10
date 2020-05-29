@@ -278,9 +278,11 @@ public class MainActivity extends AppCompatActivity {
         listView.setVisibility(View.GONE);
         String state_text = baseString + guiState;
         controllerState.setText(state_text);
+
         search_button.setVisibility(View.GONE);
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
+
 
     }
 
@@ -369,10 +371,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         guiState = "Linear Actuator";
         String state = baseString + guiState;
         controllerState.setText(state);
+
+
+
         Log.d("CHANGING STATE: ", "Buttons should now control the Linear Actuator");
+        String state_text = baseString + guiState;
+        controllerState.setText(state_text);
         leftButton.setVisibility(View.INVISIBLE);
         rightButton.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
@@ -396,6 +404,8 @@ public class MainActivity extends AppCompatActivity {
         String state = baseString + guiState;
         controllerState.setText(state);
 
+        String state_text = baseString + guiState;
+        controllerState.setText(state_text);
         leftButton.setVisibility(View.VISIBLE);
         rightButton.setVisibility(View.VISIBLE);
         view.setVisibility(View.INVISIBLE);
@@ -415,6 +425,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
         guiState = "Car Chassis";
 
+        String state_text = baseString + guiState;
+        controllerState.setText(state_text);
         view.setVisibility(View.INVISIBLE);
         centerButton.setVisibility(View.VISIBLE);
     }
