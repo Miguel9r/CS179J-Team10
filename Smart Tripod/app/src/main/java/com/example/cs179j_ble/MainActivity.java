@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<String> tasks = new ArrayList<>();
     private static ArrayList<String> commandsList = new ArrayList<>(
             Arrays.asList("flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
-                    "upLinearActuator","downLinearActuator","upBLEModuleService","downBLEModuleService","leftBLEModuleService","rightBLEModuleService"));
+                    "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"));
 
     // Bluetooth Global Variables
     private static boolean deviceFound = false;
@@ -282,8 +282,6 @@ public class MainActivity extends AppCompatActivity {
         search_button.setVisibility(View.GONE);
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
-
-
     }
 
     /**
