@@ -360,16 +360,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void centerButton_activity(View view)
     {
-        Context context = getApplicationContext();
-        CharSequence text = "Controlling: Linear Actuator!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-
-
-
         guiState = "Linear Actuator";
         String state = baseString + guiState;
         controllerState.setText(state);
@@ -383,18 +373,10 @@ public class MainActivity extends AppCompatActivity {
         rightButton.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
         linearActButton.setVisibility(View.VISIBLE);
-
     }
 
     public void linearActuator_activity(View view)
     {
-        Context context = getApplicationContext();
-        CharSequence text = "Controlling: Pan Tilt Camera!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
         Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
         guiState = "Pan Tilt";
 
@@ -413,13 +395,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void cameraPanTilt_activity (View view)
     {
-        Context context = getApplicationContext();
-        CharSequence text = "Controlling: Car Chassis!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
         Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
         guiState = "Car Chassis";
 
