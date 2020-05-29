@@ -11,7 +11,7 @@
     <TableRow
         android:id="@+id/cameraArea"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:background="#8FBEDF">
 
         <TextView
@@ -204,22 +204,22 @@
             app:layout_column="2"
             app:layout_row="0" />
 
-        <TextView
-            android:id="@+id/controllerState"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="TextView"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:visibility="gone"/>
-
     </androidx.gridlayout.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/controllerState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/listView"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="50dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#49494A"/>
