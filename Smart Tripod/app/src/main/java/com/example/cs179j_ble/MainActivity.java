@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<String> tasks = new ArrayList<>();
     private static ArrayList<String> commandsList = new ArrayList<>(
             Arrays.asList("flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
-                    "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"));
+                    "upLinearActuator","downLinearActuator","upBLEModuleService","downBLEModuleService","leftBLEModuleService","rightBLEModuleService"));
 
     // Bluetooth Global Variables
     private static boolean deviceFound = false;
@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
     int data = 0;
     int i = 0;
-    String guiState = "CarChassis";
+    String guiState = "Car Chassis";
     String[] commands = new String[]{"flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
-  "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"};
+  "upLinearActuator","downLinearActuator","upBLEModuleService","downBLEModuleService","leftBLEModuleService","rightBLEModuleService"};
 
     /**
      * This is called when the main activity is first created
@@ -272,25 +272,16 @@ public class MainActivity extends AppCompatActivity {
         initiateBluetoothProcess();
 
         Log.d("HC-06:", "Device has been connected!");
-        view.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.GONE);
         view.setEnabled(false);
         controllerState.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
         String state_text = baseString + guiState;
         controllerState.setText(state_text);
-        search_button.setVisibility(View.INVISIBLE);
+        search_button.setVisibility(View.GONE);
         start_button.setText("Device Connected!");
         start_button.setEnabled(false);
 
-        for(int i = tasks.size() -1 ; i >=0; i--)
-        {
-            tasks.remove(i);
-        }
-
-        String state_controller = baseString + guiState;
-
-        tasks.add(state_controller);
-        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -302,18 +293,9 @@ public class MainActivity extends AppCompatActivity {
     {
         if(mmSocket.isConnected())
         {
-          if(guiState == "CarChassis")
+          if(guiState == "Car Chassis")
           {
-//            int val = 0;
-//            for (i = 0; i<commands.length; i++) {
-//              if (commands[i]=="upCarChassis") {
-//                val = i;
-//              }
-//            }
-//            Log.d("SENDING DATA:", "Value sent: " + val);
-//            connectedThread.write(val);
-//            Log.d("SENDING DATA:", "Data sent!");
-//            Log.d("MOVING CAR CHASSIS:", "Car will move forward.");
+
             Log.d("STATE: ", "Car Chassis");
             Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("upCarChassis"));
             connectedThread.write(commandsList.indexOf("upCarChassis"));
@@ -322,34 +304,16 @@ public class MainActivity extends AppCompatActivity {
 
 
           }
-          else if (guiState == "LinearActuator") {
-//            int val = 0;
-//            for (i = 0; i<commands.length; i++) {
-//              if (commands[i]=="upLinearActuator") {
-//                val = i;
-//              }
-//            }
-//            Log.d("SENDING DATA:", "Value sent: " + val);
-//            connectedThread.write(val);
-//            Log.d("SENDING DATA:", "Data sent!");
-//            Log.d("MOVING LA:", "Linear Actuator will move up.");
+          else if (guiState == "Linear Actuator") {
+
               Log.d("STATE: ", "Linear Actuator");
               Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("upLinearActuator"));
               connectedThread.write(commandsList.indexOf("upLinearActuator"));
               Log.d("SENDING DATA:", "Data sent!");
               Log.d("MOVING LA:", "Linear Actuator will move up.");
           }
-          else if (guiState == "Camera") {
-//            int val = 0;
-//            for (i = 0; i<commands.length; i++) {
-//              if (commands[i]=="upPanTiltKit") {
-//                val = i;
-//              }
-//            }
-//            Log.d("SENDING DATA:", "Value sent: " + val);
-//            connectedThread.write(val);
-//            Log.d("SENDING DATA:", "Data sent!");
-//            Log.d("MOVING CAMERA:", "Pan Tilt Kit will move up.");
+          else if (guiState == "Pan Tilt") {
+
               Log.d("STATE: ", "Camera");
               Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("upPanTiltKit"));
               connectedThread.write(commandsList.indexOf("upPanTiltKit"));
@@ -370,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
     {
         if(mmSocket.isConnected())
         {
-            if(guiState == "CarChassis")
+            if(guiState == "Car Chassis")
             {
                 Log.d("STATE: ", "Car Chassis");
                 Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("leftCarChassis"));
@@ -380,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-            else if(guiState == "Camera" )
+            else if(guiState == "Pan Tilt" )
             {
                 Log.d("STATE: ", "Camera");
                 Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("leftPanTiltKit"));
@@ -405,50 +369,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        guiState = "LinearActuator";
+        guiState = "Linear Actuator";
+        String state = baseString + guiState;
+        controllerState.setText(state);
         Log.d("CHANGING STATE: ", "Buttons should now control the Linear Actuator");
         leftButton.setVisibility(View.INVISIBLE);
         rightButton.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
         linearActButton.setVisibility(View.VISIBLE);
 
-
-
-//      if(mmSocket.isConnected())
-//      {
-//        if(guiState == "CarChassis")
-//        {
-//          Log.d("CHANGING STATE:", "Buttons now control Linear Actuator.");
-//          guiState = "LinearActuator";
-//          //text = "Linear Actuator";
-//          leftButton.setVisibility(View.INVISIBLE);
-//          rightButton.setVisibility(View.INVISIBLE);
-//        }
-//        else if (guiState == "LinearActuator") {
-//          Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
-//          guiState = "Camera";
-//          //text = "Camera";
-//          leftButton.setVisibility(View.VISIBLE);
-//          rightButton.setVisibility(View.VISIBLE);
-//        }
-//        else if (guiState == "Camera") {
-//          Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
-//          guiState = "CarChassis";
-//         // text = "Car Chassis";
-//          leftButton.setVisibility(View.VISIBLE);
-//          rightButton.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//          guiState = "CarChassis";
-//          upButton.setVisibility(View.VISIBLE);
-//          downButton.setVisibility(View.VISIBLE);
-//          leftButton.setVisibility(View.VISIBLE);
-//          rightButton.setVisibility(View.VISIBLE);
-//        }
-//      }
-//      else{
-//          Log.d("SENDING DATA:", "mmSocket is NOT connected");
-//      }
     }
 
     public void linearActuator_activity(View view)
@@ -461,7 +390,11 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
 
         Log.d("CHANGING STATE:", "Buttons now control Pan Tilt Kit.");
-        guiState = "Camera";
+        guiState = "Pan Tilt";
+
+        // Change text view
+        String state = baseString + guiState;
+        controllerState.setText(state);
 
         leftButton.setVisibility(View.VISIBLE);
         rightButton.setVisibility(View.VISIBLE);
@@ -480,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
 
         Log.d("CHANGING STATE:", "Buttons now control Car Chassis.");
-        guiState = "CarChassis";
+        guiState = "Car Chassis";
 
         view.setVisibility(View.INVISIBLE);
         centerButton.setVisibility(View.VISIBLE);
@@ -490,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
     {
         if(mmSocket.isConnected())
         {
-            if(guiState == "CarChassis")
+            if(guiState == "Car Chassis")
             {
                 Log.d("STATE: ", "Car Chassis");
                 Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("rightCarChassis"));
@@ -500,7 +433,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-            else if(guiState == "Camera" )
+            else if(guiState == "Pan Tilt" )
             {
                 Log.d("STATE: ", "Camera");
                 Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("rightPanTiltKit"));
@@ -518,21 +451,16 @@ public class MainActivity extends AppCompatActivity {
     {
           if(mmSocket.isConnected())
           {
-            if(guiState == "CarChassis")
+            if(guiState == "Car Chassis")
             {
-//              int val = 0;
-//              for (i = 0; i<commands.length; i++) {
-//                if (commands[i]=="downCarChassis") {
-//                  val = i;
-//                }
-//              }
+
               Log.d("STATE: ", "Car Chassis");
               Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("downCarChassis"));
               connectedThread.write(commandsList.indexOf("downCarChassis"));
               Log.d("SENDING DATA:", "Data sent!");
               Log.d("MOVING CAR CHASSIS:", "Car will move backward.");
             }
-            else if (guiState == "LinearActuator") {
+            else if (guiState == "Linear Actuator") {
 //              int val = 0;
 //              for (i = 0; i<commands.length; i++) {
 //                if (commands[i]=="downLinearActuator") {
@@ -545,7 +473,7 @@ public class MainActivity extends AppCompatActivity {
               Log.d("SENDING DATA:", "Data sent!");
               Log.d("MOVING LA:", "Linear Actuator will move down.");
             }
-            else if (guiState == "Camera") {
+            else if (guiState == "Pan Tilt") {
 //              int val = 0;
 //              for (i = 0; i<commands.length; i++) {
 //                if (commands[i]=="downPanTiltKit") {
