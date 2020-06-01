@@ -77,7 +77,7 @@ public class ConnectedThread extends Thread
         public void run(){
             BufferedReader br;
             br = new BufferedReader(new InputStreamReader(mmInStream));
-
+            byte[] rawBytes = null;
 
             while(true){
                 try{
@@ -85,7 +85,6 @@ public class ConnectedThread extends Thread
                     String myString = br.readLine();
                     myString = myString.trim();
                     incoming = myString.split(",");
-                    byte[] rawBytes = null;
 
                     if (incoming.length > 1)
                     {
