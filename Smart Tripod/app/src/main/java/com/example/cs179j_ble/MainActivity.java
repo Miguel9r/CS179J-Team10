@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static Camera camera;
     private static TextView cameraArea_Text;
+    private static ImageView cameraArea;
     private static FloatingActionButton upButton;
     private static FloatingActionButton leftButton;
     private static FloatingActionButton rightButton;
@@ -121,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         upButton = findViewById(R.id.upButton);
         linearActButton = findViewById(R.id.linearActuator);
         panTiltButton = findViewById(R.id.cameraPanTilt);
-        cameraArea_Text = findViewById(R.id.cameraAreaText);
+        cameraArea = findViewById(R.id.cameraArea);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tasks);
         listView.setAdapter(adapter);
@@ -251,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                 //super.handleMessage(msg);
                 if(msg.what == ConnectedThread.RESPONSE_MESSAGE){
                     byte image[] = (byte[])msg.obj;
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(readBuff,0,msg.arg1);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,msg.arg1);
                     cameraArea.setImageBitmap(bitmap);
                     
                     
