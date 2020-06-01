@@ -56,23 +56,73 @@ public class ConnectedThread extends Thread
         Log.i("[THREAD-CT]","IO's obtained");
     }
 
-    public void run(){
-        BufferedReader br;
-        br = new BufferedReader(new InputStreamReader(mmInStream));
-        while(true){
-            try{
-                String resp = br.readLine();
-                Message msg = new Message();
-                msg.what = RESPONSE_MESSAGE;
-                msg.obj = resp;
-                uih.sendMessage(msg);
+    // public void run(){
+    //     BufferedReader br;
+    //     br = new BufferedReader(new InputStreamReader(mmInStream));
+    //     while(true){
+    //         try{
+    //             String resp = br.readLine();
+    //             Message msg = new Message();
+    //             msg.what = RESPONSE_MESSAGE;
+    //             msg.obj = resp;
+    //             uih.sendMessage(msg);
+    //         }
+    //         catch(IOException e){
+    //             break;
+    //         }
+    //     }
+    //     Log.i("[THREAD-CT]","While loop ended");
+    // }
+
+        public void run(){
+            BufferedReader br;
+            br = new BufferedReader(new InputStreamReader(mmInStream));
+            while(true){
+                try{
+                    String incoming[];
+                    String myString = br.readLine();
+                    myString = myString.trim(",");
+                    incoming = myString.split(",")
+                    byte rawBytes[];
+
+                    if incoming.length > 1){
+                        if(incoming[0].equals("FifoLength:")){
+                            rawBytes = new byte[int(incoming[1])];
+
+                            Log.d("Picture size: " + incoming[1] + " bytes");
+                        }
+                        else if(incoming[0].equals("Image:")){
+                            int x = 0;
+
+                            for int i = 1; i < incoming.length; i++){
+                                try {
+                                    rawBytes[x] = (byte)int(incoming[i]);
+                                    
+                                    x++;
+                                }
+                                catch(RuntimeException e){
+                                    Log.e(e.getMessage());
+                                }
+                            }
+                            try{
+                                Message msg = new Message();
+                                msg.what = RESPONSE_MESSAGE;
+                                msg.obj = rawBytes;
+                                msg.arg1 = incoming.length - 1;
+                                uih.sendMessage(msg);
+                            }
+                            catch(IOException e){
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch(IOException e){
+                    break;
+                }
             }
-            catch(IOException e){
-                break;
-            }
+            Log.i("[THREAD-CT]","While loop ended");
         }
-        Log.i("[THREAD-CT]","While loop ended");
-    }
 
     // Call this from the main activity to send data to the remote device.
     public void write(int data){

@@ -250,10 +250,12 @@ public class MainActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 //super.handleMessage(msg);
                 if(msg.what == ConnectedThread.RESPONSE_MESSAGE){
-                    String txt = (String)msg.obj;
-                    //response.append("\n" + txt);
-
-                    cameraArea_Text.setText(txt);
+                    byte image[] = (byte[])msg.obj;
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(readBuff,0,msg.arg1);
+                    cameraArea.setImageBitmap(bitmap);
+                    
+                    
+                    //cameraArea_Text.setText(txt);
                 }
 
 
