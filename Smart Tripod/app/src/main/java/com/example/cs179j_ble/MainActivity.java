@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Array List of string representation of our commands, i.e. each command's respective index is received from the Arduino
     private static ArrayList<String> commandsList = new ArrayList<>(
-            Arrays.asList("flashOff", "flashOn", "snapPicture","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
+            Arrays.asList("flashOff", "flashOn", "sendFrame","upPanTiltKit","downPanTiltKit","leftPanTiltKit","rightPanTiltKit",
                     "upLinearActuator","downLinearActuator","upCarChassis","downCarChassis","leftCarChassis","rightCarChassis"));
 
     private static ArrayAdapter<String> adapter;
@@ -280,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //This will constantly hold the most recent image for saving to user's phone
                     imageToBeSaved = bitmap;
+                    connectedThread.write(commandsList.indexOf("sendFrame")); //newly added for reducing camera runs in arduino
                     
 
                 }
@@ -292,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
 
         connectedThread = new ConnectedThread(mmSocket,mHandler);
         connectedThread.start();
+        connectedThread.write(commandsList.indexOf("sendFrame")); //newly added for reducing camera runs in arduino
       }
     }
 
