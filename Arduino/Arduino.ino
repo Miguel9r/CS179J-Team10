@@ -52,16 +52,16 @@ void setup() {
 }
 
 void loop() {
- //cameraLoop();
+ cameraLoop();
 }
 
 void serialEvent(){
   if (Serial.available() > 0) {
     uint8_t temp = 0xff;
     temp = Serial.read();
-    if(temp == 0x02){//0x10
-      cameraSerial(temp);
-    }
+//    if(temp == 0x10){
+//      cameraSerial(temp);
+//    }
     if(temp >= 0x07 && temp <= 0x08){
       linearActuatorSerial(temp);
     }
