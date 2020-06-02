@@ -517,84 +517,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     *  Creating dir for Smart Tripod if it doesn't exist and then converting bitmap to actual .jpeg
-     *
-     * @param fileName, fileName
-     */
-
-    public void saveToInternalStorage(Bitmap bitmapImage, String fileName){
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("SmartTripod", Context.MODE_PRIVATE);
-        // Create imageDir
-        File mypath= new File(directory,fileName);
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
 
     public void cameraButton_activity(View view)
     {
-//        if(mmSocket.isConnected())
-//        {
-//
-//          Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("snapPicture"));
-//          connectedThread.write(commandsList.indexOf("snapPicture"));
-//          Log.d("SENDING DATA:", "Data sent!");
-//          Log.d("SENDING DATA:", "Camera will snap a picture.");
-//        }
-//        else{
-//            Log.d("SENDING DATA:", "mmSocket is NOT connected");
-//        }
 
-        // Created creating image to save to user device
-        Date date = new Date();
-        SimpleDateFormat timeStampFormat = new SimpleDateFormat("HH_mm_ss");
-        String formattedTimeStamp = timeStampFormat.format(date);
-
-        saveToInternalStorage(imageToBeSaved, formattedTimeStamp);
-
-
-        Toast.makeText(getApplicationContext(), "Photo captured and now saving...", Toast.LENGTH_SHORT).show();
-
-
-
-//        builder = new AlertDialog.Builder(this);
-//        builder.setMessage("Do you want to save this photo?");
-//        builder.setCancelable(false);
-//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//                Toast.makeText(getApplicationContext(),"You saved this photo!", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//                Toast.makeText(getApplicationContext(), "Photo not saved!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        AlertDialog alert = builder.create();
-//        alert.setTitle("Photo Captured!");
-//        alert.show();
     }
 
 
