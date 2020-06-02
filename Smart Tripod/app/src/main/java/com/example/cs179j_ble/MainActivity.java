@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -518,31 +519,32 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      *  Creating dir for Smart Tripod if it doesn't exist and then converting bitmap to actual .jpeg
-     * @param imageToSave
-     * @param fileName
+     *
+     * @param fileName, fileName
      */
 
-    public void createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) {
+    public void saveToInternalStorage(Bitmap bitmapImage, String fileName){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("SmartTripod", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath= new File(directory,fileName);
 
-        File direct = new File(Environment.getExternalStorageDirectory() + "/SmartTripod");
-
-        if (!direct.exists()) {
-            File smartTripodDirectory = new File("/sdcard/SmartTripod/");
-            smartTripodDirectory.mkdirs();
-        }
-
-        File file = new File("/sdcard/SmartTripod/", fileName);
-        if (file.exists()) {
-            file.delete();
-        }
+        FileOutputStream fos = null;
         try {
-            FileOutputStream out = new FileOutputStream(file);
-            imageToSave.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     public void cameraButton_activity(View view)
@@ -561,10 +563,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Created creating image to save to user device
         Date date = new Date();
-        SimpleDateFormat timeStampFormat = new SimpleDateFormat("HH-mm-ss");
+        SimpleDateFormat timeStampFormat = new SimpleDateFormat("HH_mm_ss");
         String formattedTimeStamp = timeStampFormat.format(date);
 
-        createDirectoryAndSaveFile(imageToBeSaved, formattedTimeStamp);
+        saveToInternalStorage(imageToBeSaved, formattedTimeStamp);
 
 
         Toast.makeText(getApplicationContext(), "Photo captured and now saving...", Toast.LENGTH_SHORT).show();
