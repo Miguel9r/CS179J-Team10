@@ -78,14 +78,17 @@ public class ConnectedThread extends Thread
             BufferedReader br;
             br = new BufferedReader(new InputStreamReader(mmInStream));
             byte[] rawBytes = null;
-
+            boolean flag = true;
             while(true){
                 try{
                     String incoming[];
                     String myString = br.readLine();
                     myString = myString.trim();
                     incoming = myString.split(",");
-
+                    if(flag == true){
+                        this.write(2);
+                        flag = false;
+                    }
                     if (incoming.length > 1)
                     {
                         if(incoming[0].equals("FifoLength:")){
@@ -111,6 +114,7 @@ public class ConnectedThread extends Thread
                                 msg.what = RESPONSE_MESSAGE;
                                 msg.obj = rawBytes;
                                 msg.arg1 = incoming.length - 1;
+                                flag = true;
                                 uih.sendMessage(msg);
                             }
                             catch(RuntimeException e){
