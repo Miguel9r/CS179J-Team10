@@ -547,17 +547,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void cameraButton_activity(View view)
     {
-        if(mmSocket.isConnected())
-        {
-
-          Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("snapPicture"));
-          connectedThread.write(commandsList.indexOf("snapPicture"));
-          Log.d("SENDING DATA:", "Data sent!");
-          Log.d("SENDING DATA:", "Camera will snap a picture.");
-        }
-        else{
-            Log.d("SENDING DATA:", "mmSocket is NOT connected");
-        }
+//        if(mmSocket.isConnected())
+//        {
+//
+//          Log.d("SENDING DATA:", "Value sent: " + commandsList.indexOf("snapPicture"));
+//          connectedThread.write(commandsList.indexOf("snapPicture"));
+//          Log.d("SENDING DATA:", "Data sent!");
+//          Log.d("SENDING DATA:", "Camera will snap a picture.");
+//        }
+//        else{
+//            Log.d("SENDING DATA:", "mmSocket is NOT connected");
+//        }
 
         // Created creating image to save to user device
         Date date = new Date();
