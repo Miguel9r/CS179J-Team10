@@ -145,7 +145,7 @@ void cameraSetup(){
   myCAM1.set_format(JPEG);
   myCAM1.InitCAM();
   myCAM1.clear_fifo_flag();
-  myCAM1.OV2640_set_JPEG_size(OV2640_320x240); delay(1000);
+  myCAM1.OV2640_set_JPEG_size(OV2640_160x120); delay(1000);
  
   delay(1000);
  
@@ -287,7 +287,7 @@ void cameraSerial(uint8_t temp){
 //        Serial.println("Stop Motion Enabled: " + String(stopMotion));
 //      }
 //      break;
-    case 0x10:
+    case 0x02:
       if (CAM1_EXIST) {
         streamStartTime = millis();
         myCAMSendToSerial(myCAM1);
