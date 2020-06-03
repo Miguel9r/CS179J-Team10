@@ -19,6 +19,13 @@ bool stopMotion = false;
 ArduCAM myCAM1(OV2640, CS1);
 long int streamStartTime;
 
+bool sendReady = false;
+uint32_t length = 0;
+uint8_t cam_temp = 0, cam_temp_last = 0;
+byte buf[5];
+bool is_header = false;
+int i = 0;
+
 //linear actuator declarations
 Servo actuator;
 const int pwmPin = 10; //change to pwm pin
@@ -52,7 +59,55 @@ void setup() {
 }
 
 void loop() {
-// cameraLoop();
+  if(sendReady){
+    if ( length-- )
+    {
+      cam_temp_last = cam_temp;
+      cam_temp =  SPI.transfer(0x00);
+      //Read JPEG data from FIFO
+      if ( (cam_temp == 0xD9) && (cam_temp_last == 0xFF) ) //If find the end ,break while,
+      {
+        buf[i++] = cam_temp;  //save the last  0XD9
+        //Write the remain bytes in the buffer
+        myCAM1.CS_HIGH();
+        for (int i = 0; i < sizeof(buf); i++) {
+          Serial.print(buf[i]); Serial.print(",");
+        }
+        Serial.println();
+        Serial.println(F("Image transfer OK."));
+        is_header = false;
+        sendReady = false;
+        cam_temp = 0;
+        cam_temp_last = 0;
+        length = 0;
+        i = 0;
+      }
+      if (is_header == true)
+      {
+        //Write image data to buffer if not full
+        if (i < 5) {
+          buf[i++] = cam_temp;
+        } else
+        {
+          //Stream 5 bytes of raw image data to serial
+          myCAM1.CS_HIGH();
+          for (int i = 0; i < sizeof(buf); i++) {
+            Serial.print(buf[i]); Serial.print(",");
+          }
+          i = 0;
+          buf[i++] = cam_temp;
+          myCAM1.CS_LOW();
+          myCAM1.set_fifo_burst();
+        }
+      }
+      else if ((cam_temp == 0xD8) & (cam_temp_last == 0xFF))
+      {
+        is_header = true;
+        buf[i++] = cam_temp_last;
+        buf[i++] = cam_temp;
+      }
+    }
+  }
 }
 
 void serialEvent(){
@@ -86,14 +141,14 @@ void linearActuatorSerial(uint8_t temp){
       if(pwm > 1000){
         pwm -= 5;
       }
-      Serial.println("retract received");
+      //Serial.println("retract received");
       break;
 
     case 0x07:
       if(pwm < 2000){
         pwm += 5;
       }
-      Serial.println("retract received");
+      //Serial.println("retract received");
       break;
 
     default:
@@ -167,23 +222,14 @@ void pantiltSetup(){
   servo2.write(s2_angle);  // send servo2 to the middle at 90 degrees
 }
 
-void cameraLoop(){
-  if (CAM1_EXIST) {
-    streamStartTime = millis();
-    myCAMSendToSerial(myCAM1);
-    double fps = ((millis() - streamStartTime) / 1000);
-    Serial.println("fps: " + String(1 / fps ));
-  }
-}
-
 void myCAMSendToSerial(ArduCAM myCAM) {
   char str[8];
-  byte buf[5];
-  static int i = 0;
-  static int k = 0;
-  uint8_t temp = 0, temp_last = 0;
-  uint32_t length = 0;
-  bool is_header = false;
+//  byte buf[5];
+//  static int i = 0;
+//  static int k = 0;
+//  uint8_t temp = 0, temp_last = 0;
+//  uint32_t length = 0;
+//  bool is_header = false;
  
   myCAM.flush_fifo(); //Flush the FIFO
   myCAM.clear_fifo_flag(); //Clear the capture done flag
@@ -208,91 +254,66 @@ void myCAMSendToSerial(ArduCAM myCAM) {
   }
   myCAM.CS_LOW();
   myCAM.set_fifo_burst();
+
+  sendReady = true;
   Serial.print("Image:,");
- 
-  while ( length-- )
-  {
-    temp_last = temp;
-    temp =  SPI.transfer(0x00);
-    //Read JPEG data from FIFO
-    if ( (temp == 0xD9) && (temp_last == 0xFF) ) //If find the end ,break while,
-    {
-      buf[i++] = temp;  //save the last  0XD9
-      //Write the remain bytes in the buffer
-      myCAM.CS_HIGH();
-      for (int i = 0; i < sizeof(buf); i++) {
-        Serial.print(buf[i]); Serial.print(",");
-      }
-      Serial.println();
-      Serial.println(F("Image transfer OK."));
-      is_header = false;
-      i = 0;
-    }
-    if (is_header == true)
-    {
-      //Write image data to buffer if not full
-      if (i < 5) {
-        buf[i++] = temp;
-      } else
-      {
-        //Stream 5 bytes of raw image data to serial
-        myCAM.CS_HIGH();
-        for (int i = 0; i < sizeof(buf); i++) {
-          Serial.print(buf[i]); Serial.print(",");
-        }
-        i = 0;
-        buf[i++] = temp;
-        myCAM.CS_LOW();
-        myCAM.set_fifo_burst();
-      }
-    }
-    else if ((temp == 0xD8) & (temp_last == 0xFF))
-    {
-      is_header = true;
-      buf[i++] = temp_last;
-      buf[i++] = temp;
-    }
-  }
+// 
+//  while ( length-- )
+//  {
+//    temp_last = temp;
+//    temp =  SPI.transfer(0x00);
+//    //Read JPEG data from FIFO
+//    if ( (temp == 0xD9) && (temp_last == 0xFF) ) //If find the end ,break while,
+//    {
+//      buf[i++] = temp;  //save the last  0XD9
+//      //Write the remain bytes in the buffer
+//      myCAM.CS_HIGH();
+//      for (int i = 0; i < sizeof(buf); i++) {
+//        Serial.print(buf[i]); Serial.print(",");
+//      }
+//      Serial.println();
+//      Serial.println(F("Image transfer OK."));
+//      is_header = false;
+//      i = 0;
+//    }
+//    if (is_header == true)
+//    {
+//      //Write image data to buffer if not full
+//      if (i < 5) {
+//        buf[i++] = temp;
+//      } else
+//      {
+//        //Stream 5 bytes of raw image data to serial
+//        myCAM.CS_HIGH();
+//        for (int i = 0; i < sizeof(buf); i++) {
+//          Serial.print(buf[i]); Serial.print(",");
+//        }
+//        i = 0;
+//        buf[i++] = temp;
+//        myCAM.CS_LOW();
+//        myCAM.set_fifo_burst();
+//      }
+//    }
+//    else if ((temp == 0xD8) & (temp_last == 0xFF))
+//    {
+//      is_header = true;
+//      buf[i++] = temp_last;
+//      buf[i++] = temp;
+//    }
+//  }
 }
 
 void cameraSerial(uint8_t temp){
-  uint8_t temp_last = 0;
-  uint8_t start_capture = 0;
+//  uint8_t temp_last = 0;
+//  uint8_t start_capture = 0;
   switch (temp)
   {
-//    case 0:
-//      temp = 0xff;
-//      myCAM1.OV2640_set_JPEG_size(OV2640_320x240);
-//      Serial.println(F("OV2640_320x240")); delay(1000);
-//      myCAM1.clear_fifo_flag();
-//      break;
-//    case 1:
-//      temp = 0xff;
-//      myCAM1.OV2640_set_JPEG_size(OV2640_640x480);
-//      Serial.println(F("OV2640_640x480")); delay(1000);
-//      myCAM1.clear_fifo_flag();
-//      break;
-//    case 2:
-//      temp = 0xff;
-//      myCAM1.OV2640_set_JPEG_size(OV2640_1024x768);
-//      Serial.println(F("OV2640_1024x768")); delay(1000);
-//      myCAM1.clear_fifo_flag();
-//      break;
-//    case 3:
-//      {
-//        if (stopMotion)
-//          stopMotion = false;
-//        else
-//          stopMotion = true;
-//        Serial.println("Stop Motion Enabled: " + String(stopMotion));
-//      }
-//      break;
     case 0x02:
       if (CAM1_EXIST) {
-        streamStartTime = millis();
+//        streamStartTime = millis();
         myCAMSendToSerial(myCAM1);
-        double fps = ((millis() - streamStartTime) / 1000);
-        Serial.println("Total Time: " + String(fps));
+//        double fps = ((millis() - streamStartTime) / 1000);
+//        Serial.println("Total Time: " + String(fps));
       }
       break;
     default:
@@ -376,9 +397,9 @@ void pantiltSerial(uint8_t temp){
         }
         else {
           servo1.write(s1_angle); // move the servo to desired angle
-          Serial.print("Moved to: ");
-          Serial.print(s1_angle);   // print the angle
-          Serial.println(" degree");
+//          Serial.print("Moved to: ");
+//          Serial.print(s1_angle);   // print the angle
+//          Serial.println(" degree");
         }
       }
       delay(250); // waits for the servo to get there
@@ -393,9 +414,9 @@ void pantiltSerial(uint8_t temp){
         }
         else {
           servo1.write(s1_angle); // move the servo to desired angle
-          Serial.print("Moved to: ");
-          Serial.print(s1_angle);   // print the angle
-          Serial.println(" degree");
+//          Serial.print("Moved to: ");
+//          Serial.print(s1_angle);   // print the angle
+//          Serial.println(" degree");
         }
       }
       delay(250); // waits for the servo to get there
@@ -410,9 +431,9 @@ void pantiltSerial(uint8_t temp){
         }
         else {
           servo2.write(s2_angle); // move the servo to desired angle
-          Serial.print("Moved to: ");
-          Serial.print(s2_angle);   // print the angle
-          Serial.println(" degree");
+//          Serial.print("Moved to: ");
+//          Serial.print(s2_angle);   // print the angle
+//          Serial.println(" degree");
         }
       }
       delay(250); // waits for the servo to get there]
@@ -427,9 +448,9 @@ void pantiltSerial(uint8_t temp){
         }
         else {
           servo2.write(s2_angle); // move the servo to desired angle
-          Serial.print("Moved to: ");
-          Serial.print(s2_angle);   // print the angle
-          Serial.println(" degree");
+//          Serial.print("Moved to: ");
+//          Serial.print(s2_angle);   // print the angle
+//          Serial.println(" degree");
         }
       }
       delay(250); // waits for the servo to get there
