@@ -517,9 +517,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private String saveToInternalStorage(Bitmap bitmapImage, String imageName){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("SmartTripod", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,imageName);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
+    }
 
     public void cameraButton_activity(View view)
     {
+        // Create the File where the photo should go
+        String imageName = "image1.jpg";
+        String imageLocation = saveToInternalStorage(imageToBeSaved, imageName);
+        Log.d("SAVING-IMAGE: ", "Image saved at this location" + imageLocation);
 
     }
 
