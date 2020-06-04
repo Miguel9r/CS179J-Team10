@@ -544,7 +544,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) {
 
-        File direct = new File(Environment.getExternalStorageDirectory() + "/SmartTripod");
+        File direct = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SmartTripod/");
 
         if (!direct.exists()) {
             File wallpaperDirectory = new File("/sdcard/SmartTripod/");
@@ -570,7 +570,7 @@ public class MainActivity extends AppCompatActivity {
     public void cameraButton_activity(View view)
     {
         // Create the File where the photo should go
-        String imageName = "image1.jpg";
+        String imageName =  System.currentTimeMillis() + ".jpg";
         String imageLocation = saveToInternalStorage(imageToBeSaved, imageName);
         Log.d("SAVING-IMAGE: ", "Image saved at this location " + imageLocation);
 
