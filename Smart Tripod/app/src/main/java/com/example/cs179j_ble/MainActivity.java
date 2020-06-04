@@ -518,9 +518,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String saveToInternalStorage(Bitmap bitmapImage, String imageName){
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("SmartTripod", Context.MODE_PRIVATE);
+//        File directory = cw.getDir("SmartTripod", Context.MODE_PRIVATE);
+        File root = getFilesDir();
+        File directory = new File(root.toString() + "/SmartTripod");
+
         // Create imageDir
         File mypath=new File(directory,imageName);
 
@@ -546,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the File where the photo should go
         String imageName = "image1.jpg";
         String imageLocation = saveToInternalStorage(imageToBeSaved, imageName);
-        Log.d("SAVING-IMAGE: ", "Image saved at this location" + imageLocation);
+        Log.d("SAVING-IMAGE: ", "Image saved at this location " + imageLocation);
 
     }
 
