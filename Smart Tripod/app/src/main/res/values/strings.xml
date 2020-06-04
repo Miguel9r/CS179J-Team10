@@ -14,7 +14,7 @@
     <string name="camera_area">Camera Area</string>
     <string name="leftButton_string">leftButton_string</string>
     <string name="centerButton_string">centerButton_string</string>
-    <string name="rightButton_string" />
+    <string name="rightButton_string">rightButton_string</string>
     <string name="downButton_string">downButton_string</string>
     <string name="lineaerActButton_string">linearActButton</string>
     <string name="panTiltButton_string">panTiltButton</string>
