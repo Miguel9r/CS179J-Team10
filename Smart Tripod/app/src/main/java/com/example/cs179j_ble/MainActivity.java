@@ -542,12 +542,43 @@ public class MainActivity extends AppCompatActivity {
         return directory.getAbsolutePath();
     }
 
+    private String createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) {
+
+        File direct = new File(Environment.getExternalStorageDirectory() + "/SmartTripod");
+
+        if (!direct.exists()) {
+            File wallpaperDirectory = new File("/sdcard/SmartTripod/");
+            wallpaperDirectory.mkdirs();
+        }
+
+        File file = new File("/sdcard/SmartTripod/", fileName);
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            imageToSave.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return file.getAbsolutePath();
+    }
+
     public void cameraButton_activity(View view)
     {
         // Create the File where the photo should go
         String imageName = "image1.jpg";
         String imageLocation = saveToInternalStorage(imageToBeSaved, imageName);
         Log.d("SAVING-IMAGE: ", "Image saved at this location " + imageLocation);
+
+
+        String imageLocation2 = createDirectoryAndSaveFile(imageToBeSaved, imageName);
+        Log.d("SAVING-IMAGE: ", "Image saved at this location " + imageLocation2);
+
+
 
     }
 
